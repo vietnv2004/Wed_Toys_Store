@@ -1,0 +1,107 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5 pb-5">
+                <h2 class="text-center mb-4 fw-bold text-uppercase">LOGIN ACCOUNT</h2>
+                <p class="text-center text-muted mb-4">Enter your email and password:</p>
+                
+                <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    @if (TempData["LoginError"] != null && (bool)TempData["LoginError"])
+                    {
+                        <div class="alert alert-danger">
+                            Invalid email or password. Please try again.
+                        </div>
+                    }
+                    
+                    <div class="mb-3">
+                        <input type="email" name="Email" class="form-control form-control-lg" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <input type="password" name="Password" class="form-control form-control-lg" placeholder="Password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="RememberMe" id="rememberMe" value="true">
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold text-uppercase" style="background-color: #3b82f6; font-size: 1.1rem;">
+                        LOGIN
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center">
+                    <p class="mb-2">
+                        New customer? 
+                        <a asp-controller="Account" asp-action="Register" class="text-decoration-none fw-bold" style="color: #3b82f6;">
+                            Create account
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        Forgot password? 
+                        <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="text-decoration-none fw-bold" style="color: #3b82f6;">
+                            Recover password
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .modal-body {
+        padding-top: 2rem;
+    }
+    
+    .form-control-lg {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .form-control-lg:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+    
+    .btn-primary {
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+</style>
+
+<script>
+    // Tự động mở modal nếu có lỗi đăng nhập
+    @if (TempData["ShowLoginModal"] != null && (bool)TempData["ShowLoginModal"])
+    {
+        <text>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        });
+        </text>
+    }
+</script>

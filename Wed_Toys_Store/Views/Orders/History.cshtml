@@ -1,0 +1,81 @@
+@model IEnumerable<Wed_Toys_Store.Models.Order>
+
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4 fw-bold">Order History</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle me-2"></i>
+            You haven't placed any orders yet.
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var order in Model)
+            {
+                <div class="col-12 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0 fw-bold">Order #@order.Id</h5>
+                                <small class="text-muted">Placed on @order.CreatedAt.ToString("MMM dd, yyyy HH:mm")</small>
+                            </div>
+                            <div>
+                                <span class="badge bg-primary">@order.Status</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in order.OrderItems)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        @if (!string.IsNullOrEmpty(item.Product?.ImageUrl))
+                                                        {
+                                                            <img src="@item.Product.ImageUrl" alt="@item.Product.Name" 
+                                                                 class="me-3" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                                        }
+                                                        <div>
+                                                            <strong>@item.Product?.Name</strong>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Price.ToString("N0")₫</td>
+                                                <td><strong>@((item.Quantity * item.Price).ToString("N0"))₫</strong></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-end fw-bold">Total:</td>
+                                            <td class="fw-bold text-primary">@order.TotalAmount.ToString("N0")₫</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+

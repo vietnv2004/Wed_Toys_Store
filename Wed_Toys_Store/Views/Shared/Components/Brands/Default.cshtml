@@ -1,0 +1,19 @@
+@model IEnumerable<Wed_Toys_Store.Models.Brand>
+
+@if (Model != null && Model.Any())
+{
+    <div class="brands-dropdown-menu">
+        <div class="brands-grid">
+            @foreach (var brand in Model)
+            {
+                <a asp-controller="Products" asp-action="Index" asp-route-brand="@brand.Name" class="brand-item">
+                    <img src="@brand.LogoUrl" alt="@brand.Name" class="brand-logo" />
+                </a>
+            }
+        </div>
+        <div class="text-center mt-3 pb-3">
+            <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary btn-sm">View All Brands</a>
+        </div>
+    </div>
+}
+
