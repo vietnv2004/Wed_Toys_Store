@@ -1,0 +1,217 @@
+@model Wed_Toys_Store.Models.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="fw-bold mb-4 text-primary">Checkout</h2>
+        </div>
+    </div>
+
+    <form asp-action="Checkout" method="post">
+        @Html.AntiForgeryToken()
+        
+        <div class="row">
+            <!-- Left Column: Shipping Information -->
+            <div class="col-lg-8 mb-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="fw-bold mb-0 text-primary">
+                            <i class="bi bi-truck me-2"></i>Shipping Information
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="FullName" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                                <input asp-for="FullName" class="form-control form-control-lg rounded-3" placeholder="Enter your full name" required>
+                                <span asp-validation-for="FullName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+                                <input asp-for="PhoneNumber" class="form-control form-control-lg rounded-3" placeholder="Enter your phone number" required>
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                <input asp-for="Email" type="email" class="form-control form-control-lg rounded-3" placeholder="Enter your email" required>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="ShippingAddress" class="form-label fw-semibold">Shipping Address <span class="text-danger">*</span></label>
+                                <textarea asp-for="ShippingAddress" class="form-control form-control-lg rounded-3" rows="3" placeholder="Enter your shipping address" required></textarea>
+                                <span asp-validation-for="ShippingAddress" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Notes" class="form-label fw-semibold">Notes (Optional)</label>
+                                <textarea asp-for="Notes" class="form-control form-control-lg rounded-3" rows="2" placeholder="Any special instructions for delivery"></textarea>
+                                <span asp-validation-for="Notes" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="fw-bold mb-0 text-primary">
+                            <i class="bi bi-credit-card me-2"></i>Payment Method
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-check border rounded-3 p-3 h-100">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" id="paymentCOD" value="COD" checked required>
+                                    <label class="form-check-label w-100" for="paymentCOD">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-cash-coin text-primary fs-4"></i>
+                                            <div>
+                                                <div class="fw-bold">Cash on Delivery (COD)</div>
+                                                <small class="text-muted">Pay when you receive</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check border rounded-3 p-3 h-100">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" id="paymentMoMo" value="MoMo" required>
+                                    <label class="form-check-label w-100" for="paymentMoMo">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-wallet2 text-primary fs-4"></i>
+                                            <div>
+                                                <div class="fw-bold">MoMo Wallet</div>
+                                                <small class="text-muted">Pay with MoMo</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check border rounded-3 p-3 h-100">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" id="paymentVNPay" value="VNPay" required>
+                                    <label class="form-check-label w-100" for="paymentVNPay">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-credit-card-2-front text-primary fs-4"></i>
+                                            <div>
+                                                <div class="fw-bold">VNPay</div>
+                                                <small class="text-muted">Pay with VNPay</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-check border rounded-3 p-3 h-100">
+                                    <input class="form-check-input" type="radio" asp-for="PaymentMethod" id="paymentBank" value="BankCard" required>
+                                    <label class="form-check-label w-100" for="paymentBank">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-bank text-primary fs-4"></i>
+                                            <div>
+                                                <div class="fw-bold">Bank Card</div>
+                                                <small class="text-muted">Credit/Debit Card</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <span asp-validation-for="PaymentMethod" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm position-sticky" style="top: 100px;">
+                    <div class="card-header bg-white border-bottom">
+                        <h5 class="fw-bold mb-0 text-primary">
+                            <i class="bi bi-receipt me-2"></i>Order Summary
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Cart Items -->
+                        <div class="mb-3">
+                            @foreach (var item in Model.CartItems)
+                            {
+                                <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <img src="@item.ImageUrl" alt="@item.ProductName" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <i class="bi bi-image text-secondary"></i>
+                                        </div>
+                                    }
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1 small">@item.ProductName</h6>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="text-muted small">x@(item.Quantity)</span>
+                                            <span class="fw-semibold">@item.Subtotal.ToString("N0")₫</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Subtotal:</span>
+                                <span class="fw-semibold">@Model.Subtotal.ToString("N0")₫</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="text-muted">Shipping:</span>
+                                <span class="fw-semibold">
+                                    @if (Model.ShippingFee == 0)
+                                    {
+                                        <span class="text-success">Free</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Model.ShippingFee.ToString("N0")₫</span>
+                                    }
+                                </span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="fw-bold fs-5">Total:</span>
+                                <span class="fw-bold fs-5 text-danger">@Model.Total.ToString("N0")₫</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="bi bi-check-circle me-2"></i>Place Order
+                        </button>
+                        
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-arrow-left me-2"></i>Back to Cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+

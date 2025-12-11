@@ -4,6 +4,7 @@
 }
 
 <style>
+    /* Custom carousel controls positioning - Bootstrap không có utility tương tự */
     #bannerCarousel {
         position: relative;
         padding: 0 60px;
@@ -49,6 +50,13 @@
         height: 500px;
         object-fit: cover;
         object-position: center;
+    }
+
+    /* Card hover effects - chỉ giữ animation */
+    .category-card:hover,
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
     }
 </style>
 
@@ -108,9 +116,9 @@
                 {
                     <div class="col-md-2 col-sm-4 col-6">
                         <a asp-controller="Products" asp-action="Index" asp-route-categoryId="@category.Id" class="text-decoration-none">
-                            <div class="card h-100 text-center p-3 category-card">
-                                <div class="category-icon mb-2">
-                                    <i class="bi bi-grid-3x3-gap" style="font-size: 2.5rem; color: #3b82f6;"></i>
+                            <div class="card h-100 text-center p-3 category-card border border-secondary border-opacity-25">
+                                <div class="d-flex justify-content-center align-items-center mb-2">
+                                    <i class="bi bi-grid-3x3-gap text-primary" style="font-size: 2.5rem;"></i>
                                 </div>
                                 <h6 class="card-title mb-0 fw-bold">@category.Name</h6>
                             </div>
@@ -133,28 +141,40 @@
                 @foreach (var product in Model.NewArrivals)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card h-100 position-relative product-card">
-                            <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
-                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        <div class="card h-100 position-relative product-card border border-secondary border-opacity-25">
+                            @if (product.IsNew)
                             {
-                                <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;">
+                                <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
                             }
-                            else
-                            {
-                                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
-                                    <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
-                                </div>
-                            }
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none">
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                        <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
+                                    </div>
+                                }
+                            </a>
                             <div class="card-body d-flex flex-column">
-                                <h6 class="card-title fw-bold">@product.Name</h6>
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="text-decoration-none text-dark">
+                                    <h6 class="card-title fw-bold">@product.Name</h6>
+                                </a>
                                 <p class="card-text text-muted small">@(product.Description?.Length > 60 ? product.Description.Substring(0, 60) + "..." : product.Description)</p>
                                 <div class="mt-auto">
                                     <p class="card-text mb-2">
                                         <strong class="text-danger fs-5">@product.Price.ToString("N0")₫</strong>
                                     </p>
-                                    <button class="btn btn-primary w-100" onclick="addToCart(@product.Id)">
-                                        <i class="bi bi-cart-plus"></i> Add to Cart
-                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-outline-primary flex-fill">
+                                            <i class="bi bi-eye me-1"></i> View
+                                        </a>
+                                        <button class="btn btn-primary" onclick="addToCart(@product.Id)">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +196,7 @@
                 @foreach (var product in Model.BestSellers)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card h-100 position-relative product-card">
+                        <div class="card h-100 position-relative product-card border border-secondary border-opacity-25">
                             <span class="badge bg-danger position-absolute top-0 start-0 m-2">Hot</span>
                             @if (!string.IsNullOrEmpty(product.ImageUrl))
                             {
@@ -219,7 +239,7 @@
                 @foreach (var product in Model.FeaturedProducts)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card h-100 position-relative product-card">
+                        <div class="card h-100 position-relative product-card border border-secondary border-opacity-25">
                             @if (product.IsNew)
                             {
                                 <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
@@ -256,36 +276,32 @@
 
 <script>
     function addToCart(productId) {
-        // TODO: Implement add to cart functionality
-        alert('Add to cart: Product ID ' + productId);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        fetch('/Cart/AddToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `productId=${productId}&quantity=1&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update cart badge
+                const cartBadge = document.querySelector('.cart-badge-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.cartCount || 0;
+                    cartBadge.style.display = (data.cartCount > 0) ? 'flex' : 'none';
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding to cart.');
+        });
     }
 </script>
 
-<style>
-    .category-card {
-        transition: transform 0.2s, box-shadow 0.2s;
-        border: 1px solid #e0e0e0;
-    }
-
-    .category-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        border-color: #3b82f6;
-    }
-
-    .product-card {
-        transition: transform 0.2s, box-shadow 0.2s;
-        border: 1px solid #e0e0e0;
-    }
-
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .category-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-</style>

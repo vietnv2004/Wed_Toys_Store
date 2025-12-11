@@ -1,0 +1,287 @@
+@model Wed_Toys_Store.Models.Product
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    ViewData["Title"] = Model.Name;
+    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index">Products</a></li>
+        @if (Model.Category != null)
+        {
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" asp-route-categoryId="@Model.CategoryId">@Model.Category.Name</a></li>
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+    </ol>
+</nav>
+
+<div class="container mb-5">
+    <div class="row">
+        <!-- Product Image Section -->
+        <div class="col-lg-6 mb-4">
+            <div class="position-relative">
+                @if (Model.IsNew)
+                {
+                    <span class="badge bg-warning position-absolute top-0 start-0 m-3 fs-6 px-3 py-2">NEW</span>
+                }
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded-3 shadow-sm" style="width: 100%; height: auto; object-fit: cover;">
+                }
+                else
+                {
+                    <div class="bg-light rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
+                        <i class="bi bi-image text-secondary" style="font-size: 5rem;"></i>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Product Info Section -->
+        <div class="col-lg-6">
+            <div class="ps-lg-4">
+                <!-- Product Name -->
+                <h1 class="fw-bold mb-3" style="color: var(--brand-blue);">@Model.Name</h1>
+
+                <!-- Price -->
+                <div class="mb-4">
+                    <h2 class="text-danger fw-bold mb-2">@Model.Price.ToString("N0")₫</h2>
+                    @if (Model.Stock > 0)
+                    {
+                        <span class="badge bg-success fs-6">In Stock</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6">Out of Stock</span>
+                    }
+                </div>
+
+                <!-- Product Details -->
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-3" style="color: var(--brand-blue);">Product Information</h5>
+                    <div class="row g-3">
+                        @if (Model.Category != null)
+                        {
+                            <div class="col-6">
+                                <div class="border rounded p-3">
+                                    <div class="text-muted small mb-1">Category</div>
+                                    <div class="fw-semibold">@Model.Category.Name</div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Brand))
+                        {
+                            <div class="col-6">
+                                <div class="border rounded p-3">
+                                    <div class="text-muted small mb-1">Brand</div>
+                                    <div class="fw-semibold">@Model.Brand</div>
+                                </div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.AgeRange))
+                        {
+                            <div class="col-6">
+                                <div class="border rounded p-3">
+                                    <div class="text-muted small mb-1">Age Range</div>
+                                    <div class="fw-semibold">@Model.AgeRange</div>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-6">
+                            <div class="border rounded p-3">
+                                <div class="text-muted small mb-1">Stock</div>
+                                <div class="fw-semibold">@Model.Stock items</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                @if (!string.IsNullOrEmpty(Model.Description))
+                {
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3" style="color: var(--brand-blue);">Description</h5>
+                        <p class="text-muted" style="line-height: 1.8;">@Model.Description</p>
+                    </div>
+                }
+
+                <!-- Add to Cart Section -->
+                <div class="border-top pt-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <label class="fw-semibold mb-0">Quantity:</label>
+                        <div class="input-group" style="width: 150px;">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+                            <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="@Model.Stock">
+                            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-warning btn-lg flex-fill fw-bold" onclick="buyNow(@Model.Id)" @(Model.Stock == 0 ? "disabled" : "")>
+                                <i class="bi bi-bag-check me-2"></i>Buy Now
+                            </button>
+                            <button class="btn btn-outline-danger btn-lg" onclick="addToWishlist(@Model.Id)">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" onclick="addToCart(@Model.Id)" @(Model.Stock == 0 ? "disabled" : "")>
+                            <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mt-4 pt-4 border-top">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-truck text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Free Shipping</h6>
+                                    <p class="text-muted small mb-0">Free shipping for orders from 500,000₫</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-arrow-return-left text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Easy Returns</h6>
+                                    <p class="text-muted small mb-0">30-day return policy</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-shield-check text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Secure Payment</h6>
+                                    <p class="text-muted small mb-0">100% secure payment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Related Products Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <h3 class="fw-bold mb-4" style="color: var(--brand-blue);">Related Products</h3>
+        <div class="row g-4" id="relatedProducts">
+            <!-- Related products will be loaded here -->
+            <div class="col-12 text-center text-muted">
+                <p>Loading related products...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function increaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        const max = parseInt(quantityInput.getAttribute('max'));
+        const current = parseInt(quantityInput.value);
+        if (current < max) {
+            quantityInput.value = current + 1;
+        }
+    }
+
+    function decreaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        const current = parseInt(quantityInput.value);
+        if (current > 1) {
+            quantityInput.value = current - 1;
+        }
+    }
+
+    function addToCart(productId) {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        fetch('/Cart/AddToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `productId=${productId}&quantity=${quantity}&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update cart badge
+                const cartBadge = document.querySelector('.cart-badge-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.cartCount || 0;
+                    cartBadge.style.display = (data.cartCount > 0) ? 'flex' : 'none';
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding to cart.');
+        });
+    }
+
+    function buyNow(productId) {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/Cart/BuyNow';
+        
+        const productIdInput = document.createElement('input');
+        productIdInput.type = 'hidden';
+        productIdInput.name = 'productId';
+        productIdInput.value = productId;
+        
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'hidden';
+        quantityInput.name = 'quantity';
+        quantityInput.value = quantity;
+        
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = '__RequestVerificationToken';
+        tokenInput.value = token;
+        
+        form.appendChild(productIdInput);
+        form.appendChild(quantityInput);
+        form.appendChild(tokenInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function addToWishlist(productId) {
+        // TODO: Implement add to wishlist functionality
+        alert('Added to wishlist: Product ID ' + productId);
+    }
+
+    // Load related products
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryId = @(Model.CategoryId);
+        const currentProductId = @Model.Id;
+        
+        // TODO: Load related products from same category
+        // This would typically be done via AJAX call to an API endpoint
+        // For now, we'll just show a message
+        setTimeout(function() {
+            document.getElementById('relatedProducts').innerHTML = 
+                '<div class="col-12 text-center text-muted"><p>No related products found.</p></div>';
+        }, 1000);
+    });
+</script>
+
+<input type="hidden" name="__RequestVerificationToken" value="@token" />
+

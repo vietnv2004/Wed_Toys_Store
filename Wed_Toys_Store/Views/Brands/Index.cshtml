@@ -1,0 +1,258 @@
+@model IEnumerable<Wed_Toys_Store.Models.Brand>
+
+@{
+    ViewData["Title"] = "Brands Management";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: var(--admin-sidebar-bg);
+            color: white;
+            padding: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .admin-sidebar .sidebar-header {
+            padding: 20px;
+            background-color: var(--admin-sidebar-header);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-sidebar .sidebar-header h4 {
+            margin: 0;
+            font-weight: bold;
+            color: white;
+        }
+
+        .admin-sidebar .menu-section {
+            padding: 15px 0;
+        }
+
+        .admin-sidebar .menu-section-title {
+            padding: 10px 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .admin-sidebar .menu-item {
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .admin-sidebar .menu-item:hover {
+            background-color: var(--admin-sidebar-hover);
+            color: white;
+            border-left-color: var(--admin-sidebar-active);
+        }
+
+        .admin-sidebar .menu-item.active {
+            background-color: var(--admin-sidebar-active);
+            color: white;
+            border-left-color: white;
+        }
+
+        .admin-sidebar .menu-item i {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--admin-sidebar-header);
+        }
+
+        .admin-sidebar .sidebar-footer .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer .btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        .brand-logo {
+            width: 100px;
+            height: 60px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <!-- Content -->
+        <div class="admin-content">
+            <!-- Messages -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Title and Add Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-tags me-2"></i>Brands Management
+                </h2>
+                <a href="@Url.Action("Create", "Brands")" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-2"></i>Create New Brand
+                </a>
+            </div>
+
+            <!-- Brands Table -->
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Logo</th>
+                                <th>Name</th>
+                                <th>Display Order</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th class="w-auto">Actions</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var brand in Model)
+                            {
+                                <tr>
+                                    <td><strong>@brand.Id</strong></td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(brand.LogoUrl))
+                                        {
+                                            <img src="@brand.LogoUrl" alt="@brand.Name" class="brand-logo">
+                                        }
+                                        else
+                                        {
+                                            <div class="brand-logo bg-light rounded d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="fw-semibold">@brand.Name</div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">@brand.DisplayOrder</span>
+                                    </td>
+                                    <td>
+                                        @if (brand.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <small>@brand.CreatedAt.ToString("MM/dd/yyyy")</small>
+                                        <br>
+                                        <small class="text-muted">@brand.CreatedAt.ToString("HH:mm")</small>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="@Url.Action("Details", "Brands", new { id = brand.Id })" class="btn btn-outline-primary" title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="@Url.Action("Edit", "Brands", new { id = brand.Id })" class="btn btn-outline-warning" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "Brands", new { id = brand.Id })" class="btn btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                    No brands found. <a href="@Url.Action("Create", "Brands")" class="text-primary">Create your first brand</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

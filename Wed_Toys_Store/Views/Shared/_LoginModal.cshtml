@@ -12,7 +12,7 @@
                 <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
                     @Html.AntiForgeryToken()
                     
-                    @if (TempData["LoginError"] != null && (bool)TempData["LoginError"])
+                    @if (TempData["LoginError"] != null && TempData["LoginError"] is bool loginError && loginError)
                     {
                         <div class="alert alert-danger">
                             Invalid email or password. Please try again.
@@ -20,11 +20,11 @@
                     }
                     
                     <div class="mb-3">
-                        <input type="email" name="Email" class="form-control form-control-lg" placeholder="Email" required>
+                        <input type="email" name="Email" class="form-control form-control-lg rounded-3" placeholder="Email" required>
                     </div>
                     
                     <div class="mb-4">
-                        <input type="password" name="Password" class="form-control form-control-lg" placeholder="Password" required>
+                        <input type="password" name="Password" class="form-control form-control-lg rounded-3" placeholder="Password" required>
                     </div>
                     
                     <div class="mb-3">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold text-uppercase" style="background-color: #3b82f6; font-size: 1.1rem;">
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold text-uppercase rounded-3" style="font-size: 1.1rem;">
                         LOGIN
                     </button>
                 </form>
@@ -61,47 +61,29 @@
 </div>
 
 <style>
+    /* Modal custom styling - Bootstrap không có rounded-4 */
     .modal-content {
         border-radius: 12px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     }
     
-    .modal-body {
-        padding-top: 2rem;
-    }
-    
-    .form-control-lg {
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        border-radius: 8px;
-        border: 1px solid #e0e0e0;
-    }
-    
-    .form-control-lg:focus {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
-    }
-    
-    .btn-primary {
-        border-radius: 8px;
-        transition: all 0.3s;
-    }
-    
+    /* Button hover effect - chỉ giữ animation */
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
     }
 </style>
 
-<script>
-    // Tự động mở modal nếu có lỗi đăng nhập
-    @if (TempData["ShowLoginModal"] != null && (bool)TempData["ShowLoginModal"])
-    {
-        <text>
+@if (TempData["ShowLoginModal"] != null && TempData["ShowLoginModal"] is bool showModal && showModal)
+{
+    <script>
+        // Tự động mở modal nếu có lỗi đăng nhập
         document.addEventListener('DOMContentLoaded', function() {
-            var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-            loginModal.show();
+            var loginModalElement = document.getElementById('loginModal');
+            if (loginModalElement) {
+                var loginModal = new bootstrap.Modal(loginModalElement);
+                loginModal.show();
+            }
         });
-        </text>
-    }
-</script>
+    </script>
+}

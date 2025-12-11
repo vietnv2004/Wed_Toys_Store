@@ -11,7 +11,6 @@ namespace Wed_Toys_Store.Models
         public ApplicationUser? User { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]
         [StringLength(200)]

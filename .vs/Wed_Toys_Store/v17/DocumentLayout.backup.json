@@ -3,8 +3,148 @@
   "WorkspaceRootPath": "D:\\Wed_Toys_Store\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\orders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\orders.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\orderitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\changepasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\checkoutviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\checkoutviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\home\\about.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\bannerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\bannerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\productscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\orderscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\ordersviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\ordersviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\productsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\productsviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\products.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\products.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\dashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\viewcomponents\\brandsviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\viewcomponents\\brandsviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\viewcomponents\\categoriesviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\viewcomponents\\categoriesviewcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\profileviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\_loginmodal.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\admin\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\admin\\orderdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\banners\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\banners\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\banners\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\banners\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\products\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\products\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\products\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\products\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\components\\categories\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -15,52 +155,56 @@
       "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\components\\brands\\default.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\banners\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\banners\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\technology_stack.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\technology_stack.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\products\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\products\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\banner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\products\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\products\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\products\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\products\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\_validationscriptspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\shared\\error.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\_viewimports.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\views\\banners\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\views\\banners\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|d:\\wed_toys_store\\wed_toys_store\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3BC46C7F-0086-400A-BE56-058A2B34A929}|Wed_Toys_Store\\Wed_Toys_Store.csproj|solutionrelative:wed_toys_store\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,35 +214,474 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Default.cshtml",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
-              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-09T19:29:43.247Z"
+              "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAiwAkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T19:46:22.563Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Default.cshtml",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
-              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\Edit.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Edit.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-09T19:29:33.053Z"
+              "WhenOpened": "2025-12-11T19:46:04.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ChangePasswordViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ChangePasswordViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ChangePasswordViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ChangePasswordViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\ChangePasswordViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T19:45:53.113Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAKUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T19:31:24.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "OrderItem.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\OrderItem.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\OrderItem.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\OrderItem.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\OrderItem.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:04.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\CategoriesController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\CategoriesController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\CategoriesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T19:56:29.845Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "BannersController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\BannersController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\BannersController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\BannersController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\BannersController.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAIwIcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T17:44:15.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Delete.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Delete.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\Delete.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Delete.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\Delete.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:50:23.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Category.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Category.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Category.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T15:56:47.924Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomeViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\HomeViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\HomeViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\HomeViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\HomeViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:05.576Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Product.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Product.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Product.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Product.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\Product.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T01:05:14.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Orders.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Orders.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\Orders.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Orders.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\Orders.cshtml",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T18:52:15.969Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\DashboardViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\DashboardViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\DashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:38.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ProductsController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\ProductsController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\ProductsController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\ProductsController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\ProductsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:56:30.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T19:56:37.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "OrdersViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\OrdersViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\OrdersViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\OrdersViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\OrdersViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:00.219Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CheckoutViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\CheckoutViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\CheckoutViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\CheckoutViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\CheckoutViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:07.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ProductsViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ProductsViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ProductsViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ProductsViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\ProductsViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:28.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ErrorViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T15:56:47.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "About.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Home\\About.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Home\\About.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Home\\About.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Home\\About.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-10T19:58:03.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Banner.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Banner.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Banner.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Banner.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\Banner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T16:16:28.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Brand.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Brand.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Brand.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Brand.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\Brand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:13.746Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "OrdersController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\OrdersController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\OrdersController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\OrdersController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\OrdersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T19:56:39.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Dashboard.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\Dashboard.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Dashboard.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\Dashboard.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T18:52:12.323Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "BrandsViewComponent.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\ViewComponents\\BrandsViewComponent.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\ViewComponents\\BrandsViewComponent.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\ViewComponents\\BrandsViewComponent.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\ViewComponents\\BrandsViewComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:52:05.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "CategoriesViewComponent.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\ViewComponents\\CategoriesViewComponent.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\ViewComponents\\CategoriesViewComponent.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\ViewComponents\\CategoriesViewComponent.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\ViewComponents\\CategoriesViewComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:52:03.811Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "Order.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Order.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Order.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Order.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\Order.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:34.732Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "ProfileViewModel.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ProfileViewModel.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ProfileViewModel.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ProfileViewModel.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\ProfileViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:47:27.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Products.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Products.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\Products.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\Products.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\Products.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:50:32.092Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "_LoginModal.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_LoginModal.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\_LoginModal.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_LoginModal.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\_LoginModal.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:07:08.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ApplicationUser.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Models\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T16:18:55.672Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "_AdminSidebar.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\_AdminSidebar.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\_AdminSidebar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:07:05.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Details.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Products\\Details.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Details.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Products\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:07:50.483Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Create.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Products\\Create.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Create.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Products\\Create.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:07:51.699Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "OrderDetails.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\OrderDetails.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Admin\\OrderDetails.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Admin\\OrderDetails.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Admin\\OrderDetails.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T01:50:25.072Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Products\\Edit.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Edit.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Products\\Edit.cshtml",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAGoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-10T17:51:16.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\_ViewImports.cshtml",
@@ -110,79 +693,103 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 46,
+              "Title": "Error.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T15:25:46.317Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Index.cshtml",
               "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Banners\\Index.cshtml",
               "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Index.cshtml",
               "RelativeToolTip": "Wed_Toys_Store\\Views\\Banners\\Index.cshtml",
-              "ViewState": "AgIAABYAAAAAAAAAAAAcwCYAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAALEAAAAAAAAAAAAcwJYAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-09T16:53:23.33Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "TECHNOLOGY_STACK.md",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\TECHNOLOGY_STACK.md",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\TECHNOLOGY_STACK.md",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\TECHNOLOGY_STACK.md",
-              "RelativeToolTip": "Wed_Toys_Store\\TECHNOLOGY_STACK.md",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-12-09T16:43:20.784Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Index.cshtml",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Products\\Index.cshtml",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Index.cshtml",
-              "RelativeToolTip": "Wed_Toys_Store\\Views\\Products\\Index.cshtml",
-              "ViewState": "AgIAAIsAAAAAAAAAAAAgwIMAAAAoAAAAAAAAAA==",
+              "DocumentIndex": 32,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Banners\\Edit.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Edit.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Banners\\Edit.cshtml",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-09T16:27:47.47Z"
+              "WhenOpened": "2025-12-10T19:56:24.56Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ApplicationUser.cs",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ApplicationUser.cs",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ApplicationUser.cs",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ApplicationUser.cs",
-              "RelativeToolTip": "Wed_Toys_Store\\Models\\ApplicationUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T16:18:55.672Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Program.cs",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Program.cs",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Program.cs",
-              "RelativeToolTip": "Wed_Toys_Store\\Program.cs",
+              "DocumentIndex": 45,
+              "Title": "_ValidationScriptsPartial.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T16:16:42.314Z"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-10T19:56:51.982Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Banner.cs",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Banner.cs",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Banner.cs",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Banner.cs",
-              "RelativeToolTip": "Wed_Toys_Store\\Models\\Banner.cs",
+              "DocumentIndex": 37,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Components\\Brands\\Default.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T16:16:28.089Z"
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T19:29:33.053Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 36,
+              "Title": "Default.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Components\\Categories\\Default.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T19:29:43.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Cart\\Index.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Cart\\Index.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Cart\\Index.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Cart\\Index.cshtml",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAAALQAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-10T19:57:43.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAMQBAAAAAAAAAAAzwMYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T14:59:29.933Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Data\\DbInitializer.cs",
               "RelativeDocumentMoniker": "Wed_Toys_Store\\Data\\DbInitializer.cs",
@@ -194,64 +801,63 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAGcCAAAAAAAAAAAzwI4BAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-09T14:59:29.933Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Category.cs",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Category.cs",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\Category.cs",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\Category.cs",
-              "RelativeToolTip": "Wed_Toys_Store\\Models\\Category.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T15:56:47.924Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ErrorViewModel.cs",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ErrorViewModel.cs",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Models\\ErrorViewModel.cs",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Models\\ErrorViewModel.cs",
-              "RelativeToolTip": "Wed_Toys_Store\\Models\\ErrorViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T15:56:47.111Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 41,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Wed_Toys_Store\\Data\\ApplicationDbContext.cs",
               "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "Wed_Toys_Store\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAIBAwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAA0wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-09T15:56:41.478Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Error.cshtml",
-              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
-              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
-              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
-              "RelativeToolTip": "Wed_Toys_Store\\Views\\Shared\\Error.cshtml",
+              "DocumentIndex": 48,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Controllers\\CartController.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Controllers\\CartController.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Controllers\\CartController.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAA0wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-10T19:56:31.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Index.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Products\\Index.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Products\\Index.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Products\\Index.cshtml",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAgwIMAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-09T16:27:47.47Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Create.cshtml",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Views\\Banners\\Create.cshtml",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Views\\Banners\\Create.cshtml",
+              "RelativeToolTip": "Wed_Toys_Store\\Views\\Banners\\Create.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-09T15:25:46.317Z"
+              "WhenOpened": "2025-12-10T19:56:23.392Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Program.cs",
+              "RelativeDocumentMoniker": "Wed_Toys_Store\\Program.cs",
+              "ToolTip": "D:\\Wed_Toys_Store\\Wed_Toys_Store\\Program.cs",
+              "RelativeToolTip": "Wed_Toys_Store\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T16:16:42.314Z"
             }
           ]
         }
