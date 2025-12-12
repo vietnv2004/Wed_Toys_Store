@@ -18,9 +18,21 @@ namespace Wed_Toys_Store.Controllers
 
         // GET: Products
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string? ageRange, string? brand, string? priceRange, string? sortBy, int? categoryId)
+        public async Task<IActionResult> Index(string? ageRange, string? brand, string? priceRange, string? sortBy, int? categoryId, string? searchTerm)
         {
             var query = _context.Products.Include(p => p.Category).AsQueryable();
+
+            // Filter by Search Term
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = searchTerm.Trim();
+                query = query.Where(p => 
+                    p.Name.Contains(searchTerm) ||
+                    (p.Description != null && p.Description.Contains(searchTerm)) ||
+                    (p.Brand != null && p.Brand.Contains(searchTerm)) ||
+                    (p.Category != null && p.Category.Name.Contains(searchTerm))
+                );
+            }
 
             // Filter by Category
             if (categoryId.HasValue && categoryId.Value > 0)
@@ -106,6 +118,7 @@ namespace Wed_Toys_Store.Controllers
             ViewBag.SelectedPriceRange = priceRange;
             ViewBag.SelectedCategoryId = categoryId;
             ViewBag.SortBy = sortBy;
+            ViewBag.SearchTerm = searchTerm;
             ViewBag.TotalProducts = products.Count;
 
             return View(products);

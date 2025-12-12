@@ -24,7 +24,15 @@
                     </div>
                     
                     <div class="mb-4">
-                        <input type="password" name="Password" class="form-control form-control-lg rounded-3" placeholder="Password" required>
+                        <div class="input-group">
+                            <input type="password" name="Password" id="loginPassword" class="form-control form-control-lg" placeholder="Password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                            <button class="btn btn-outline-secondary" 
+                                    type="button" 
+                                    id="toggleLoginPassword"
+                                    style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <i class="bi bi-eye" id="loginPasswordIcon"></i>
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="mb-3">
@@ -74,16 +82,37 @@
     }
 </style>
 
-@if (TempData["ShowLoginModal"] != null && TempData["ShowLoginModal"] is bool showModal && showModal)
-{
-    <script>
+<script>
+    // Toggle password visibility trong login modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePasswordBtn = document.getElementById('toggleLoginPassword');
+        const passwordInput = document.getElementById('loginPassword');
+        const passwordIcon = document.getElementById('loginPasswordIcon');
+        
+        if (togglePasswordBtn && passwordInput && passwordIcon) {
+            togglePasswordBtn.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordIcon.classList.remove('bi-eye');
+                    passwordIcon.classList.add('bi-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordIcon.classList.remove('bi-eye-slash');
+                    passwordIcon.classList.add('bi-eye');
+                }
+            });
+        }
+        
         // Tự động mở modal nếu có lỗi đăng nhập
-        document.addEventListener('DOMContentLoaded', function() {
+        @if (TempData["ShowLoginModal"] != null && TempData["ShowLoginModal"] is bool showModal && showModal)
+        {
+            <text>
             var loginModalElement = document.getElementById('loginModal');
             if (loginModalElement) {
                 var loginModal = new bootstrap.Modal(loginModalElement);
                 loginModal.show();
             }
-        });
-    </script>
-}
+            </text>
+        }
+    });
+</script>

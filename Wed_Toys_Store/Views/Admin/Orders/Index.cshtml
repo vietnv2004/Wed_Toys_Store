@@ -200,13 +200,13 @@
                                 {
                                     <option value="Shipped">Shipped</option>
                                 }
-                                @if (currentStatus == "Delivered")
+                                @if (currentStatus == "Completed")
                                 {
-                                    <option value="Delivered" selected>Delivered</option>
+                                    <option value="Completed" selected>Completed</option>
                                 }
                                 else
                                 {
-                                    <option value="Delivered">Delivered</option>
+                                    <option value="Completed">Completed</option>
                                 }
                                 @if (currentStatus == "Cancelled")
                                 {
@@ -287,7 +287,7 @@
                                                     "Pending" => "bg-warning",
                                                     "Processing" => "bg-info",
                                                     "Shipped" => "bg-primary",
-                                                    "Delivered" => "bg-success",
+                                                    "Completed" => "bg-success",
                                                     "Cancelled" => "bg-danger",
                                                     _ => "bg-secondary"
                                                 };
@@ -303,39 +303,37 @@
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                                 @{
-                                                    var isFinalized = order.Status == "Cancelled" || order.Status == "Delivered";
+                                                    var isFinalized = order.Status == "Cancelled" || order.Status == "Completed";
                                                 }
                                                 @if (!isFinalized)
                                                 {
-                                                    <div class="btn-group btn-group-sm">
-                                                        <button type="button" class="btn btn-outline-secondary dropdown-toggle" 
-                                                                data-bs-toggle="dropdown" 
-                                                                aria-expanded="false">
-                                                            <i class="bi bi-gear"></i>
+                                                    @* Confirm button - only shown when status = Pending *@
+                                                    @if (order.Status == "Pending")
+                                                    {
+                                                        <button type="button" class="btn btn-outline-info" onclick="confirmOrder(@order.Id)" title="Confirm Order">
+                                                            <i class="bi bi-check-circle me-1"></i>Confirm
                                                         </button>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href="#" onclick="updateStatus(@order.Id, 'Pending'); return false;">Pending</a></li>
-                                                            <li><a class="dropdown-item" href="#" onclick="updateStatus(@order.Id, 'Processing'); return false;">Processing</a></li>
-                                                            <li><a class="dropdown-item" href="#" onclick="updateStatus(@order.Id, 'Shipped'); return false;">Shipped</a></li>
-                                                            <li><a class="dropdown-item" href="#" onclick="updateStatus(@order.Id, 'Delivered'); return false;">Delivered</a></li>
-                                                            <li><hr class="dropdown-divider"></li>
-                                                            <li><a class="dropdown-item text-danger" href="#" onclick="updateStatus(@order.Id, 'Cancelled'); return false;">Cancelled</a></li>
-                                                        </ul>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <button type="button" class="btn btn-outline-secondary" disabled title="Status cannot be changed">
-                                                        <i class="bi bi-gear"></i>
-                                                    </button>
-                                                }
-                                                @if (!isFinalized)
-                                                {
-                                                    <button type="button" class="btn btn-outline-success" onclick="completeOrder(@order.Id)" title="Complete Order">
-                                                        <i class="bi bi-check-circle"></i>
-                                                    </button>
+                                                    }
+                                                    
+                                                    @* Ship button - only shown when status = Processing *@
+                                                    @if (order.Status == "Processing")
+                                                    {
+                                                        <button type="button" class="btn btn-outline-primary" onclick="shipOrder(@order.Id)" title="Ship Order">
+                                                            <i class="bi bi-truck me-1"></i>Ship
+                                                        </button>
+                                                    }
+                                                    
+                                                    @* Complete button - only shown when status = Shipped *@
+                                                    @if (order.Status == "Shipped")
+                                                    {
+                                                        <button type="button" class="btn btn-outline-success" onclick="completeOrder(@order.Id)" title="Complete Order">
+                                                            <i class="bi bi-check-circle-fill me-1"></i>Complete
+                                                        </button>
+                                                    }
+                                                    
+                                                    @* Cancel button - shown for all non-finalized statuses *@
                                                     <button type="button" class="btn btn-outline-danger" onclick="cancelOrder(@order.Id)" title="Cancel Order">
-                                                        <i class="bi bi-x-lg"></i>
+                                                        <i class="bi bi-x-circle me-1"></i>Cancel
                                                     </button>
                                                 }
                                             </div>
@@ -434,7 +432,7 @@
     </div>
 
     <!-- Hidden form for AntiForgeryToken -->
-    <form id="antiForgeryForm" style="display: none;">
+    <form id="antiForgeryForm" class="d-none">
         @Html.AntiForgeryToken()
     </form>
 
@@ -456,8 +454,8 @@
             window.location.href = url.toString();
         }
 
-        function updateStatus(orderId, status) {
-            if (confirm('Are you sure you want to update the order status to "' + status + '"?')) {
+        function confirmOrder(orderId) {
+            if (confirm('Are you sure you want to confirm this order?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
                 form.action = '@Url.Action("UpdateOrderStatus", "Admin")';
@@ -480,7 +478,7 @@
                 const statusInput = document.createElement('input');
                 statusInput.type = 'hidden';
                 statusInput.name = 'status';
-                statusInput.value = status;
+                statusInput.value = 'Processing';
                 form.appendChild(statusInput);
                 
                 document.body.appendChild(form);
@@ -488,11 +486,43 @@
             }
         }
 
-        function cancelOrder(orderId) {
-            if (confirm('Are you sure you want to cancel this order?')) {
+        function shipOrder(orderId) {
+            if (confirm('Are you sure you want to ship this order?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '@Url.Action("CancelOrder", "Admin")';
+                form.action = '@Url.Action("UpdateOrderStatus", "Admin")';
+                
+                const token = document.querySelector('#antiForgeryForm input[name="__RequestVerificationToken"]');
+                if (token) {
+                    const tokenInput = document.createElement('input');
+                    tokenInput.type = 'hidden';
+                    tokenInput.name = '__RequestVerificationToken';
+                    tokenInput.value = token.value;
+                    form.appendChild(tokenInput);
+                }
+                
+                const idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = orderId;
+                form.appendChild(idInput);
+                
+                const statusInput = document.createElement('input');
+                statusInput.type = 'hidden';
+                statusInput.name = 'status';
+                statusInput.value = 'Shipped';
+                form.appendChild(statusInput);
+                
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function completeOrder(orderId) {
+            if (confirm('Are you sure you want to complete this order?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("CompleteOrder", "Admin")';
                 
                 const token = document.querySelector('#antiForgeryForm input[name="__RequestVerificationToken"]');
                 if (token) {
@@ -514,11 +544,11 @@
             }
         }
 
-        function completeOrder(orderId) {
-            if (confirm('Are you sure you want to mark this order as delivered (completed)?')) {
+        function cancelOrder(orderId) {
+            if (confirm('Are you sure you want to cancel this order?')) {
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '@Url.Action("CompleteOrder", "Admin")';
+                form.action = '@Url.Action("CancelOrder", "Admin")';
                 
                 const token = document.querySelector('#antiForgeryForm input[name="__RequestVerificationToken"]');
                 if (token) {

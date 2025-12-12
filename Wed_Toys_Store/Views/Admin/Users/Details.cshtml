@@ -434,7 +434,7 @@
                                                     <td>#@order.Id</td>
                                                     <td>@order.OrderDate.ToString("MM/dd/yyyy")</td>
                                                     <td>
-                                                        <span class="badge bg-@(order.Status == "Delivered" ? "success" : order.Status == "Cancelled" ? "danger" : "warning")">
+                                                        <span class="badge bg-@(order.Status == "Completed" ? "success" : order.Status == "Cancelled" ? "danger" : "warning")">
                                                             @order.Status
                                                         </span>
                                                     </td>

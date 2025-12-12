@@ -18,7 +18,7 @@ namespace Wed_Toys_Store.Models
 
         [Required]
         [StringLength(50)]
-        public string Status { get; set; } = "Pending"; // Pending, Processing, Shipped, Delivered, Cancelled
+        public string Status { get; set; } = "Pending"; // Pending, Processing, Shipped, Completed, Cancelled
 
         [Required]
         [Range(0, double.MaxValue)]

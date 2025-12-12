@@ -8,13 +8,19 @@ namespace Wed_Toys_Store.Data
     {
         public static async Task SeedAsync(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            // Tạo Admin Role
+            // Create User Role
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("User"));
+            }
+
+            // Create Admin Role
             if (!await roleManager.RoleExistsAsync("Admin"))
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
 
-            // Tạo Admin User
+            // Create Admin User
             var adminEmail = "admin@toysstore.com";
             if (await userManager.FindByEmailAsync(adminEmail) == null)
             {

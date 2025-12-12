@@ -21,63 +21,120 @@ namespace Wed_Toys_Store.Controllers
             _roleManager = roleManager;
         }
 
-        // GET: Admin/Dashboard
-        public async Task<IActionResult> Dashboard(int? month, int? year)
+        // GET: /Admin
+        // Điều hướng mặc định vào Dashboard
+        public IActionResult Index()
         {
-            // Sử dụng tháng/năm được chọn hoặc mặc định là tháng/năm hiện tại
-            var selectedMonth = month ?? DateTime.UtcNow.Month;
-            var selectedYear = year ?? DateTime.UtcNow.Year;
-            
-            // Validate month and year
-            if (selectedMonth < 1 || selectedMonth > 12)
-                selectedMonth = DateTime.UtcNow.Month;
-            if (selectedYear < 2000 || selectedYear > 2100)
-                selectedYear = DateTime.UtcNow.Year;
-            
+            return RedirectToAction(nameof(Dashboard));
+        }
+
+        // GET: Admin/Dashboard
+        public async Task<IActionResult> Dashboard(int? month, int? year, DateTime? fromDate, DateTime? toDate)
+        {
             var today = DateTime.UtcNow.Date;
-            var selectedMonthStart = new DateTime(selectedYear, selectedMonth, 1);
-            var selectedMonthEnd = selectedMonthStart.AddMonths(1).AddDays(-1);
+            DateTime startDate, endDate;
+            int? selectedMonth = null;
+            int? selectedYear = null;
+            
+            // Ưu tiên filter theo khoảng thời gian (fromDate - toDate)
+            if (fromDate.HasValue && toDate.HasValue)
+            {
+                startDate = fromDate.Value.Date;
+                endDate = toDate.Value.Date.AddDays(1).AddSeconds(-1); // Đến cuối ngày
+                
+                // Validate: fromDate phải <= toDate
+                if (startDate > endDate)
+                {
+                    // Nếu fromDate > toDate, đổi chỗ
+                    var temp = startDate;
+                    startDate = endDate;
+                    endDate = temp;
+                }
+            }
+            else
+            {
+                // Sử dụng tháng/năm được chọn hoặc mặc định là tháng/năm hiện tại
+                selectedMonth = month ?? DateTime.UtcNow.Month;
+                selectedYear = year ?? DateTime.UtcNow.Year;
+                
+                // Validate month and year
+                if (selectedMonth < 1 || selectedMonth > 12)
+                    selectedMonth = DateTime.UtcNow.Month;
+                if (selectedYear < 2000 || selectedYear > 2100)
+                    selectedYear = DateTime.UtcNow.Year;
+                
+                startDate = new DateTime(selectedYear.Value, selectedMonth.Value, 1);
+                endDate = startDate.AddMonths(1).AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
 
             var viewModel = new DashboardViewModel
             {
                 TotalProducts = await _context.Products.CountAsync(),
                 TotalOrders = await _context.Orders
-                    .Where(o => o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .CountAsync(),
-                TotalRevenue = await _context.OrderItems
-                    .SumAsync(oi => oi.Quantity * oi.Price),
+                // Doanh thu chỉ tính đơn đã giao/hoàn tất (tính phía client để tránh lỗi aggregate lồng nhau)
+                TotalRevenue = (await _context.Orders
+                    .Where(o => o.Status == "Completed" && o.OrderDate >= startDate && o.OrderDate <= endDate)
+                    .Include(o => o.OrderItems)
+                    .Select(o => new
+                    {
+                        o.TotalAmount,
+                        OrderItems = o.OrderItems.Select(oi => new { oi.Quantity, oi.Price })
+                    })
+                    .ToListAsync())
+                    .Sum(x => x.TotalAmount > 0
+                        ? x.TotalAmount
+                        : x.OrderItems.Sum(oi => oi.Quantity * oi.Price)),
                 TotalUsers = await _userManager.Users.CountAsync(),
                 PendingOrders = await _context.Orders
-                    .Where(o => o.Status == "Pending" && o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Where(o => o.Status == "Pending" && o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .CountAsync(),
                 ProcessingOrders = await _context.Orders
-                    .Where(o => o.Status == "Processing" && o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Where(o => o.Status == "Processing" && o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .CountAsync(),
                 ShippedOrders = await _context.Orders
-                    .Where(o => o.Status == "Shipped" && o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Where(o => o.Status == "Shipped" && o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .CountAsync(),
                 DeliveredOrders = await _context.Orders
-                    .Where(o => o.Status == "Delivered" && o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Where(o => o.Status == "Completed" && o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .CountAsync(),
                 LowStockProducts = await _context.Products.CountAsync(p => p.Stock < 10),
-                TodayRevenue = await _context.OrderItems
-                    .Join(_context.Orders, oi => oi.OrderId, o => o.Id, (oi, o) => new { oi, o })
-                    .Where(x => x.o.OrderDate >= today)
-                    .SumAsync(x => x.oi.Quantity * x.oi.Price),
-                ThisMonthRevenue = await _context.OrderItems
-                    .Join(_context.Orders, oi => oi.OrderId, o => o.Id, (oi, o) => new { oi, o })
-                    .Where(x => x.o.OrderDate >= selectedMonthStart && x.o.OrderDate <= selectedMonthEnd)
-                    .SumAsync(x => x.oi.Quantity * x.oi.Price),
+                TodayRevenue = (await _context.Orders
+                    .Where(o => o.Status == "Completed" && o.OrderDate >= today && o.OrderDate < today.AddDays(1))
+                    .Include(o => o.OrderItems)
+                    .Select(o => new
+                    {
+                        o.TotalAmount,
+                        OrderItems = o.OrderItems.Select(oi => new { oi.Quantity, oi.Price })
+                    })
+                    .ToListAsync())
+                    .Sum(x => x.TotalAmount > 0
+                        ? x.TotalAmount
+                        : x.OrderItems.Sum(oi => oi.Quantity * oi.Price)),
+                ThisMonthRevenue = (await _context.Orders
+                    .Where(o => o.Status == "Completed" && o.OrderDate >= startDate && o.OrderDate <= endDate)
+                    .Include(o => o.OrderItems)
+                    .Select(o => new
+                    {
+                        o.TotalAmount,
+                        OrderItems = o.OrderItems.Select(oi => new { oi.Quantity, oi.Price })
+                    })
+                    .ToListAsync())
+                    .Sum(x => x.TotalAmount > 0
+                        ? x.TotalAmount
+                        : x.OrderItems.Sum(oi => oi.Quantity * oi.Price)),
                 RecentOrders = await _context.Orders
                     .Include(o => o.User)
-                    .Where(o => o.OrderDate >= selectedMonthStart && o.OrderDate <= selectedMonthEnd)
+                    .Include(o => o.OrderItems)
+                    .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
                     .OrderByDescending(o => o.OrderDate)
                     .Take(5)
                     .ToListAsync(),
                 TopSellingProducts = await _context.OrderItems
                     .Include(oi => oi.Product)
                     .Include(oi => oi.Order)
-                    .Where(oi => oi.Order != null && oi.Order.OrderDate >= selectedMonthStart && oi.Order.OrderDate <= selectedMonthEnd)
+                    .Where(oi => oi.Order != null && oi.Order.OrderDate >= startDate && oi.Order.OrderDate <= endDate)
                     .GroupBy(oi => new { oi.ProductId, oi.Product!.Name })
                     .Select(g => new TopSellingProduct
                     {
@@ -90,10 +147,43 @@ namespace Wed_Toys_Store.Controllers
                     .Take(5)
                     .ToListAsync(),
                 SelectedMonth = selectedMonth,
-                SelectedYear = selectedYear
+                SelectedYear = selectedYear,
+                FromDate = fromDate,
+                ToDate = toDate,
+                // Tính doanh thu theo từng ngày trong khoảng thời gian
+                DailyRevenues = await GetDailyRevenues(startDate, endDate)
             };
 
-            return View(viewModel);
+            return View("Dashboard/Index", viewModel);
+        }
+
+        private async Task<List<DailyRevenue>> GetDailyRevenues(DateTime startDate, DateTime endDate)
+        {
+            var orders = await _context.Orders
+                .Where(o => o.Status == "Completed" && o.OrderDate >= startDate && o.OrderDate <= endDate)
+                .Include(o => o.OrderItems)
+                .ToListAsync();
+
+            var dailyRevenues = new List<DailyRevenue>();
+            var currentDate = startDate;
+
+            while (currentDate <= endDate)
+            {
+                var dayOrders = orders.Where(o => o.OrderDate.Date == currentDate.Date).ToList();
+                var revenue = dayOrders.Sum(o => o.TotalAmount > 0
+                    ? o.TotalAmount
+                    : o.OrderItems.Sum(oi => oi.Quantity * oi.Price));
+
+                dailyRevenues.Add(new DailyRevenue
+                {
+                    Date = currentDate,
+                    Revenue = revenue
+                });
+
+                currentDate = currentDate.AddDays(1);
+            }
+
+            return dailyRevenues;
         }
 
         // GET: Admin/Products
@@ -131,14 +221,14 @@ namespace Wed_Toys_Store.Controllers
                 TotalItems = totalItems
             };
 
-            return View(viewModel);
+            return View("Products/Index", viewModel);
         }
 
         // GET: Admin/Create
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = await _context.Categories.OrderBy(c => c.Name).ToListAsync();
-            return View();
+            return View("Products/Create");
         }
 
         // POST: Admin/Create
@@ -154,7 +244,7 @@ namespace Wed_Toys_Store.Controllers
                 return RedirectToAction(nameof(Products));
             }
             ViewBag.Categories = await _context.Categories.OrderBy(c => c.Name).ToListAsync();
-            return View(product);
+            return View("Products/Create", product);
         }
 
         // GET: Admin/Edit/5
@@ -172,7 +262,7 @@ namespace Wed_Toys_Store.Controllers
             }
 
             ViewBag.Categories = await _context.Categories.OrderBy(c => c.Name).ToListAsync();
-            return View(product);
+            return View("Products/Edit", product);
         }
 
         // POST: Admin/Edit/5
@@ -223,7 +313,7 @@ namespace Wed_Toys_Store.Controllers
                 return RedirectToAction(nameof(Products));
             }
             ViewBag.Categories = await _context.Categories.OrderBy(c => c.Name).ToListAsync();
-            return View(product);
+            return View("Products/Edit", product);
         }
 
         // GET: Admin/Delete/5
@@ -243,7 +333,7 @@ namespace Wed_Toys_Store.Controllers
                 return NotFound();
             }
 
-            return View(product);
+            return View("Products/Delete", product);
         }
 
         // POST: Admin/Delete/5
@@ -314,7 +404,7 @@ namespace Wed_Toys_Store.Controllers
             // Filter by status if provided
             if (!string.IsNullOrEmpty(status))
             {
-                var allowedStatuses = new[] { "Pending", "Processing", "Shipped", "Delivered", "Cancelled" };
+                var allowedStatuses = new[] { "Pending", "Processing", "Shipped", "Completed", "Cancelled" };
                 if (allowedStatuses.Contains(status))
                 {
                     query = query.Where(o => o.Status == status);
@@ -343,7 +433,7 @@ namespace Wed_Toys_Store.Controllers
             };
 
             ViewBag.CurrentStatus = status;
-            return View(viewModel);
+            return View("Orders/Index", viewModel);
         }
 
         // GET: Admin/OrderDetails/5
@@ -365,7 +455,7 @@ namespace Wed_Toys_Store.Controllers
                 return NotFound();
             }
 
-            return View(order);
+            return View("Orders/Details", order);
         }
 
         // POST: Admin/UpdateOrderStatus
@@ -379,14 +469,14 @@ namespace Wed_Toys_Store.Controllers
                 return NotFound();
             }
 
-            // Không cho phép thay đổi trạng thái nếu đã Cancelled hoặc Delivered
-            if (order.Status == "Cancelled" || order.Status == "Delivered")
+            // Không cho phép thay đổi trạng thái nếu đã Cancelled hoặc Completed
+            if (order.Status == "Cancelled" || order.Status == "Completed")
             {
-                TempData["ErrorMessage"] = "Cannot update status for cancelled or delivered orders.";
+                TempData["ErrorMessage"] = "Cannot update status for cancelled or completed orders.";
                 return RedirectToAction(nameof(Orders));
             }
 
-            var allowedStatuses = new[] { "Pending", "Processing", "Shipped", "Delivered", "Cancelled" };
+            var allowedStatuses = new[] { "Pending", "Processing", "Shipped", "Completed", "Cancelled" };
             if (allowedStatuses.Contains(status))
             {
                 order.Status = status;
@@ -407,16 +497,16 @@ namespace Wed_Toys_Store.Controllers
                 return NotFound();
             }
 
-            // Không cho phép hủy nếu đã Cancelled hoặc Delivered
+            // Không cho phép hủy nếu đã Cancelled hoặc Completed
             if (order.Status == "Cancelled")
             {
                 TempData["ErrorMessage"] = "This order is already cancelled.";
                 return RedirectToAction(nameof(Orders));
             }
 
-            if (order.Status == "Delivered")
+            if (order.Status == "Completed")
             {
-                TempData["ErrorMessage"] = "Cannot cancel a delivered order.";
+                TempData["ErrorMessage"] = "Cannot cancel a completed order.";
                 return RedirectToAction(nameof(Orders));
             }
 
@@ -437,10 +527,10 @@ namespace Wed_Toys_Store.Controllers
                 return NotFound();
             }
 
-            // Không cho phép hoàn thành nếu đã Cancelled hoặc Delivered
-            if (order.Status == "Delivered")
+            // Không cho phép hoàn thành nếu đã Cancelled hoặc Completed
+            if (order.Status == "Completed")
             {
-                TempData["ErrorMessage"] = "This order is already delivered.";
+                TempData["ErrorMessage"] = "This order is already completed.";
                 return RedirectToAction(nameof(Orders));
             }
 
@@ -450,7 +540,7 @@ namespace Wed_Toys_Store.Controllers
                 return RedirectToAction(nameof(Orders));
             }
 
-            order.Status = "Delivered";
+            order.Status = "Completed";
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Orders));
@@ -525,7 +615,7 @@ namespace Wed_Toys_Store.Controllers
             };
 
             ViewBag.UsersWithRoles = usersWithRoles;
-            return View(viewModel);
+            return View("Users/Index", viewModel);
         }
 
         // GET: Admin/UserDetails
@@ -556,7 +646,7 @@ namespace Wed_Toys_Store.Controllers
 
             ViewBag.UserRoles = roles;
             ViewBag.UserOrders = orders;
-            return View(user);
+            return View("Users/Details", user);
         }
 
         // POST: Admin/LockUser
@@ -636,55 +726,68 @@ namespace Wed_Toys_Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeUserRole(string id, string role)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
+            try
             {
-                return NotFound();
-            }
-
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            // Prevent changing your own role
-            var currentUserId = _userManager.GetUserId(User);
-            if (id == currentUserId)
-            {
-                TempData["ErrorMessage"] = "You cannot change your own role.";
-                return RedirectToAction(nameof(Users));
-            }
-
-            // Validate role exists
-            if (!await _roleManager.RoleExistsAsync(role))
-            {
-                TempData["ErrorMessage"] = $"Role '{role}' does not exist.";
-                return RedirectToAction(nameof(Users));
-            }
-
-            // Get current roles
-            var currentRoles = await _userManager.GetRolesAsync(user);
-            
-            // Remove all current roles
-            if (currentRoles.Any())
-            {
-                var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
-                if (!removeResult.Succeeded)
+                if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(role))
                 {
-                    TempData["ErrorMessage"] = "Error removing current roles: " + string.Join(", ", removeResult.Errors.Select(e => e.Description));
+                    TempData["ErrorMessage"] = "Invalid user ID or role.";
                     return RedirectToAction(nameof(Users));
                 }
-            }
 
-            // Add new role
-            var addResult = await _userManager.AddToRoleAsync(user, role);
-            if (addResult.Succeeded)
-            {
-                TempData["SuccessMessage"] = $"User role has been changed to '{role}' successfully.";
+                var user = await _userManager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    TempData["ErrorMessage"] = "User not found.";
+                    return RedirectToAction(nameof(Users));
+                }
+
+                // Prevent changing your own role
+                var currentUserId = _userManager.GetUserId(User);
+                if (id == currentUserId)
+                {
+                    TempData["ErrorMessage"] = "You cannot change your own role.";
+                    return RedirectToAction(nameof(Users));
+                }
+
+                // Ensure role exists, create if not
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    var createRoleResult = await _roleManager.CreateAsync(new IdentityRole(role));
+                    if (!createRoleResult.Succeeded)
+                    {
+                        TempData["ErrorMessage"] = $"Failed to create role '{role}': " + string.Join(", ", createRoleResult.Errors.Select(e => e.Description));
+                        return RedirectToAction(nameof(Users));
+                    }
+                }
+
+                // Get current roles
+                var currentRoles = await _userManager.GetRolesAsync(user);
+                
+                // Remove all current roles
+                if (currentRoles.Any())
+                {
+                    var removeResult = await _userManager.RemoveFromRolesAsync(user, currentRoles);
+                    if (!removeResult.Succeeded)
+                    {
+                        TempData["ErrorMessage"] = "Error removing current roles: " + string.Join(", ", removeResult.Errors.Select(e => e.Description));
+                        return RedirectToAction(nameof(Users));
+                    }
+                }
+
+                // Add new role
+                var addResult = await _userManager.AddToRoleAsync(user, role);
+                if (addResult.Succeeded)
+                {
+                    TempData["SuccessMessage"] = $"User role has been changed to '{role}' successfully.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Error changing role: " + string.Join(", ", addResult.Errors.Select(e => e.Description));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Error changing role: " + string.Join(", ", addResult.Errors.Select(e => e.Description));
+                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
             }
 
             return RedirectToAction(nameof(Users));

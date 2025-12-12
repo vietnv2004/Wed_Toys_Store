@@ -234,6 +234,15 @@
                 var monthNames = new[] { "January", "February", "March", "April", "May", "June", 
                                          "July", "August", "September", "October", "November", "December" };
                 var selectedMonthName = monthNames[selectedMonth - 1];
+                var dateRangeText = "";
+                if (Model.FromDate.HasValue && Model.ToDate.HasValue)
+                {
+                    dateRangeText = $"Từ {Model.FromDate.Value:dd/MM/yyyy} đến {Model.ToDate.Value:dd/MM/yyyy}";
+                }
+                else if (Model.SelectedMonth.HasValue && Model.SelectedYear.HasValue)
+                {
+                    dateRangeText = $"{selectedMonthName} {selectedYear}";
+                }
             }
             
             <!-- Header -->
@@ -245,33 +254,31 @@
                     <p class="text-muted mb-0">Welcome back! Here's what's happening with your store.</p>
                 </div>
                 <div>
-                    <form method="get" action="@Url.Action("Dashboard", "Admin")" class="d-inline-flex gap-2">
-                        <select name="month" class="form-select form-select-sm" onchange="this.form.submit()" style="width: auto;">
-                            @for (int i = 1; i <= 12; i++)
-                            {
-                                @if (i == selectedMonth)
-                                {
-                                    <option value="@i" selected>@monthNames[i - 1]</option>
-                                }
-                                else
-                                {
-                                    <option value="@i">@monthNames[i - 1]</option>
-                                }
-                            }
-                        </select>
-                        <select name="year" class="form-select form-select-sm" onchange="this.form.submit()" style="width: auto;">
-                            @for (int y = DateTime.Now.Year; y >= DateTime.Now.Year - 5; y--)
-                            {
-                                @if (y == selectedYear)
-                                {
-                                    <option value="@y" selected>@y</option>
-                                }
-                                else
-                                {
-                                    <option value="@y">@y</option>
-                                }
-                            }
-                        </select>
+                    <form method="get" action="@Url.Action("Dashboard", "Admin")" class="d-inline-flex gap-2 align-items-end">
+                        <div class="d-flex flex-column">
+                            <label class="form-label small mb-1">From Date</label>
+                            <input type="date" name="fromDate" class="form-control form-control-sm" 
+                                   value="@(Model.FromDate?.ToString("yyyy-MM-dd") ?? "")" 
+                                   style="width: auto;" />
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label class="form-label small mb-1">To Date</label>
+                            <input type="date" name="toDate" class="form-control form-control-sm" 
+                                   value="@(Model.ToDate?.ToString("yyyy-MM-dd") ?? "")" 
+                                   style="width: auto;" />
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label class="form-label small mb-1">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label class="form-label small mb-1">&nbsp;</label>
+                            <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -327,7 +334,7 @@
                                     <div class="stat-label">Total Revenue</div>
                                     <div class="stat-value">₫@Model.TotalRevenue.ToString("N0")</div>
                                     <small class="revenue-trend">
-                                        <i class="bi bi-arrow-up"></i> ₫@Model.ThisMonthRevenue.ToString("N0") @selectedMonthName @selectedYear
+                                        <i class="bi bi-arrow-up"></i> ₫@Model.ThisMonthRevenue.ToString("N0") @(dateRangeText != "" ? dateRangeText : $"{selectedMonthName} {selectedYear}")
                                     </small>
                                 </div>
                                 <div class="stat-icon stat-icon-warning">
@@ -418,6 +425,23 @@
                 </div>
             </div>
 
+            <!-- Revenue Chart -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-12">
+                    <div class="card chart-card shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-graph-up me-2"></i>Daily Revenue Chart - @(dateRangeText != "" ? dateRangeText : $"{selectedMonthName} {selectedYear}")</span>
+                            <button type="button" class="btn btn-sm btn-outline-danger" onclick="exportChartToPDF()">
+                                <i class="bi bi-file-pdf me-1"></i>Export PDF
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="revenueChart" height="80"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Recent Orders and Top Products -->
             <div class="row g-4">
                 <!-- Recent Orders -->
@@ -451,7 +475,12 @@
                                                     <td><strong>#@order.Id</strong></td>
                                                     <td>@(order.User?.Email ?? "N/A")</td>
                                                     <td>@order.OrderDate.ToString("MMM dd, yyyy")</td>
-                                                    <td><strong>₫@order.TotalAmount.ToString("N0")</strong></td>
+                                                @{
+                                                    var amount = order.TotalAmount > 0
+                                                        ? order.TotalAmount
+                                                        : order.OrderItems.Sum(oi => oi.Quantity * oi.Price);
+                                                }
+                                                <td><strong>₫@amount.ToString("N0")</strong></td>
                                                     <td>
                                                         @{
                                                             var statusClass = order.Status switch
@@ -550,11 +579,11 @@
                 <div class="col-md-6">
                     <div class="card chart-card shadow-sm">
                         <div class="card-header">
-                            <i class="bi bi-calendar-month me-2"></i>@selectedMonthName @selectedYear Revenue
+                            <i class="bi bi-calendar-month me-2"></i>@(dateRangeText != "" ? dateRangeText : $"{selectedMonthName} {selectedYear}") Revenue
                         </div>
                         <div class="card-body">
                             <h2 class="text-success mb-0">₫@Model.ThisMonthRevenue.ToString("N0")</h2>
-                            <small class="text-muted">Revenue generated in @selectedMonthName @selectedYear</small>
+                            <small class="text-muted">Revenue generated @(dateRangeText != "" && Model.FromDate.HasValue && Model.ToDate.HasValue ? $"from {Model.FromDate.Value:dd/MM/yyyy} to {Model.ToDate.Value:dd/MM/yyyy}" : $"in {selectedMonthName} {selectedYear}")</small>
                         </div>
                     </div>
                 </div>
@@ -564,5 +593,95 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Daily revenue data
+        var dailyRevenuesData = @Html.Raw(Json.Serialize(Model.DailyRevenues.Select(dr => new { 
+            date = dr.Date.ToString("dd/MM"), 
+            revenue = dr.Revenue 
+        })));
+
+        var ctx = document.getElementById('revenueChart').getContext('2d');
+        var revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dailyRevenuesData.map(function(r) { return r.date; }),
+                datasets: [{
+                    label: 'Revenue (₫)',
+                    data: dailyRevenuesData.map(function(r) { return r.revenue; }),
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return 'Revenue: ₫' + context.parsed.y.toLocaleString('vi-VN');
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₫' + value.toLocaleString('vi-VN');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Export chart to PDF
+        function exportChartToPDF() {
+            const { jsPDF } = window.jspdf;
+            const chartCanvas = document.getElementById('revenueChart');
+            const chartCard = chartCanvas.closest('.card');
+            
+            html2canvas(chartCard, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                logging: false
+            }).then(function(canvas) {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('landscape', 'mm', 'a4');
+                
+                const imgWidth = 280;
+                const pageHeight = 210;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                let heightLeft = imgHeight;
+                
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                const fileName = 'Daily_Revenue_Chart_' + '@selectedMonthName' + '_' + '@selectedYear' + '.pdf';
+                pdf.save(fileName);
+            });
+        }
+    </script>
 </body>
 </html>

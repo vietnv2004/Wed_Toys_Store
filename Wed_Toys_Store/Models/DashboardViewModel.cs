@@ -17,6 +17,15 @@ namespace Wed_Toys_Store.Models
         public List<TopSellingProduct> TopSellingProducts { get; set; } = new List<TopSellingProduct>();
         public int? SelectedMonth { get; set; }
         public int? SelectedYear { get; set; }
+        public DateTime? FromDate { get; set; }
+        public DateTime? ToDate { get; set; }
+        public List<DailyRevenue> DailyRevenues { get; set; } = new List<DailyRevenue>();
+    }
+
+    public class DailyRevenue
+    {
+        public DateTime Date { get; set; }
+        public decimal Revenue { get; set; }
     }
 
     public class TopSellingProduct

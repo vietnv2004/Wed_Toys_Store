@@ -167,7 +167,7 @@
                                             "Pending" => "bg-warning",
                                             "Processing" => "bg-info",
                                             "Shipped" => "bg-primary",
-                                            "Delivered" => "bg-success",
+                                            "Completed" => "bg-success",
                                             "Cancelled" => "bg-danger",
                                             _ => "bg-secondary"
                                         };
@@ -250,7 +250,7 @@
                         </div>
                         <div class="card-body">
                             @{
-                                var isFinalized = Model.Status == "Cancelled" || Model.Status == "Delivered";
+                                var isFinalized = Model.Status == "Cancelled" || Model.Status == "Completed";
                             }
                             
                             @if (isFinalized)
@@ -265,7 +265,7 @@
                                         <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
                                         <option value="Processing" selected="@(Model.Status == "Processing")">Processing</option>
                                         <option value="Shipped" selected="@(Model.Status == "Shipped")">Shipped</option>
-                                        <option value="Delivered" selected="@(Model.Status == "Delivered")">Delivered</option>
+                                        <option value="Completed" selected="@(Model.Status == "Completed")">Completed</option>
                                         <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Cancelled</option>
                                     </select>
                                 </div>
@@ -285,7 +285,7 @@
                                             <option value="Pending" selected="@(Model.Status == "Pending")">Pending</option>
                                             <option value="Processing" selected="@(Model.Status == "Processing")">Processing</option>
                                             <option value="Shipped" selected="@(Model.Status == "Shipped")">Shipped</option>
-                                            <option value="Delivered" selected="@(Model.Status == "Delivered")">Delivered</option>
+                                            <option value="Completed" selected="@(Model.Status == "Completed")">Completed</option>
                                             <option value="Cancelled" selected="@(Model.Status == "Cancelled")">Cancelled</option>
                                         </select>
                                     </div>
@@ -299,7 +299,7 @@
                                     <form method="post" action="@Url.Action("CompleteOrder", "Admin")">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="id" value="@Model.Id" />
-                                        <button type="submit" class="btn btn-success w-100" onclick="return confirm('Are you sure you want to mark this order as delivered?');">
+                                        <button type="submit" class="btn btn-success w-100" onclick="return confirm('Are you sure you want to mark this order as completed?');">
                                             <i class="bi bi-check-circle me-2"></i>Complete Order
                                         </button>
                                     </form>

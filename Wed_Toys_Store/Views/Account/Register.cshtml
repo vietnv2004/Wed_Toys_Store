@@ -52,13 +52,29 @@
                         
                         <div class="mb-4">
                             <label asp-for="Password" class="form-label fw-bold">PASSWORD</label>
-                            <input asp-for="Password" type="password" class="form-control form-control-lg rounded-3" placeholder="Password" required>
+                            <div class="input-group">
+                                <input asp-for="Password" type="password" id="registerPassword" class="form-control form-control-lg" placeholder="Password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <button class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        id="toggleRegisterPassword"
+                                        style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                    <i class="bi bi-eye" id="registerPasswordIcon"></i>
+                                </button>
+                            </div>
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         
                         <div class="mb-4">
                             <label asp-for="ConfirmPassword" class="form-label fw-bold">CONFIRM PASSWORD</label>
-                            <input asp-for="ConfirmPassword" type="password" class="form-control form-control-lg rounded-3" placeholder="Confirm password" required>
+                            <div class="input-group">
+                                <input asp-for="ConfirmPassword" type="password" id="registerConfirmPassword" class="form-control form-control-lg" placeholder="Confirm password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <button class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        id="toggleRegisterConfirmPassword"
+                                        style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                    <i class="bi bi-eye" id="registerConfirmPasswordIcon"></i>
+                                </button>
+                            </div>
                             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                         </div>
                         
@@ -95,7 +111,52 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Toggle password visibility trong register form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle Password
+            const togglePasswordBtn = document.getElementById('toggleRegisterPassword');
+            const passwordInput = document.getElementById('registerPassword');
+            const passwordIcon = document.getElementById('registerPasswordIcon');
+            
+            if (togglePasswordBtn && passwordInput && passwordIcon) {
+                togglePasswordBtn.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        passwordIcon.classList.remove('bi-eye');
+                        passwordIcon.classList.add('bi-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordIcon.classList.remove('bi-eye-slash');
+                        passwordIcon.classList.add('bi-eye');
+                    }
+                });
+            }
+            
+            // Toggle Confirm Password
+            const toggleConfirmPasswordBtn = document.getElementById('toggleRegisterConfirmPassword');
+            const confirmPasswordInput = document.getElementById('registerConfirmPassword');
+            const confirmPasswordIcon = document.getElementById('registerConfirmPasswordIcon');
+            
+            if (toggleConfirmPasswordBtn && confirmPasswordInput && confirmPasswordIcon) {
+                toggleConfirmPasswordBtn.addEventListener('click', function() {
+                    if (confirmPasswordInput.type === 'password') {
+                        confirmPasswordInput.type = 'text';
+                        confirmPasswordIcon.classList.remove('bi-eye');
+                        confirmPasswordIcon.classList.add('bi-eye-slash');
+                    } else {
+                        confirmPasswordInput.type = 'password';
+                        confirmPasswordIcon.classList.remove('bi-eye-slash');
+                        confirmPasswordIcon.classList.add('bi-eye');
+                    }
+                });
+            }
+        });
+    </script>
 }
+
+
 
 
 
