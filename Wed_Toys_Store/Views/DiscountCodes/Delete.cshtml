@@ -1,0 +1,125 @@
+@model Wed_Toys_Store.Models.DiscountCode
+
+@{
+    ViewData["Title"] = "Delete Discount Code";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        .admin-main {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body class="bg-body-secondary">
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main min-vh-100">
+        <div class="container-fluid p-4">
+            <div class="card shadow-sm border-danger">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0 text-danger">
+                            <i class="bi bi-exclamation-triangle me-2"></i>Delete Discount Code
+                        </h2>
+                        <a href="@Url.Action("Index", "DiscountCodes")" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to List
+                        </a>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Are you sure you want to delete this discount code?</strong> This action cannot be undone.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-muted small">ID</label>
+                                <div class="fs-5">@Model.Id</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-muted small">Discount Code</label>
+                                <div class="fs-5 fw-bold text-primary">@Model.Code</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-muted small">Discount Amount</label>
+                                    <div class="fs-5">@((Model.DiscountAmount / 1000).ToString("N0"))K VND</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-muted small">Minimum Order Amount</label>
+                                    <div class="fs-5">@((Model.MinOrderAmount / 1000).ToString("N0"))K VND</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-muted small">Description</label>
+                                <div class="fs-6">@(string.IsNullOrEmpty(Model.Description) ? "N/A" : Model.Description)</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-muted small">Expiry Date</label>
+                                    <div class="fs-6">@Model.ExpiryDate.ToString("dd/MM/yyyy HH:mm")</div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold text-muted small">Status</label>
+                                    <div>
+                                        @if (Model.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold text-muted small">Created At</label>
+                                <div class="fs-6">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+                            </div>
+
+                            <form asp-action="Delete" method="post" class="mt-4">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" asp-for="Id" />
+                                
+                                <div class="d-flex gap-3">
+                                    <button type="submit" class="btn btn-danger btn-lg">
+                                        <i class="bi bi-trash me-2"></i>Delete Discount Code
+                                    </button>
+                                    <a href="@Url.Action("Index", "DiscountCodes")" class="btn btn-outline-secondary btn-lg">
+                                        <i class="bi bi-x-circle me-2"></i>Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+

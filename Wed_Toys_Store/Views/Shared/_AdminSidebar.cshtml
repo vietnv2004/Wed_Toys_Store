@@ -1,0 +1,156 @@
+@{
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+
+    // Logic xác định menu active (Giữ nguyên)
+    bool isDashboardActive = currentController == "Admin" && (string.IsNullOrEmpty(currentAction) || currentAction == "Dashboard" || currentAction == "Index");
+    bool isProductsActive = currentController == "Admin" && (currentAction == "Products" || currentAction == "Create" || currentAction == "Edit" || currentAction == "Delete");
+    bool isCategoriesActive = currentController == "Categories";
+    bool isBannersActive = currentController == "Banners";
+    bool isBrandsActive = currentController == "Brands";
+    bool isOrdersActive = currentController == "Admin" && (currentAction == "Orders" || currentAction == "OrderDetails");
+    bool isUsersActive = currentController == "Admin" && (currentAction == "Users" || currentAction == "UserDetails");
+    bool isDiscountCodesActive = currentController == "DiscountCodes";
+}
+
+<style>
+    /* CSS Variables & Custom Styles - Giữ nguyên tuyệt đối */
+    .admin-sidebar {
+        --bs-sidebar-bg: #4169E1;
+        --bs-sidebar-hover: #3556C7;
+        --bs-sidebar-active: #2E4FC0;
+        --bs-sidebar-header: #2E4FC0;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: var(--bs-sidebar-bg);
+        color: var(--bs-white);
+        padding: 0;
+        overflow-y: auto;
+        z-index: 1000;
+    }
+
+        .admin-sidebar .sidebar-header {
+            background-color: var(--bs-sidebar-header);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-sidebar .menu-section-title {
+            font-size: 0.6875rem; /* 11px */
+            text-transform: uppercase;
+            letter-spacing: 0.0625rem; /* 1px */
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: var(--bs-font-weight-semibold);
+        }
+
+        .admin-sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+            .admin-sidebar .nav-link:hover {
+                background-color: var(--bs-sidebar-hover);
+                color: var(--bs-white);
+                border-left-color: var(--bs-sidebar-active);
+            }
+
+            .admin-sidebar .nav-link.active {
+                background-color: var(--bs-sidebar-active);
+                color: var(--bs-white);
+                border-left-color: var(--bs-white);
+                font-weight: var(--bs-font-weight-semibold);
+            }
+
+        .admin-sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bs-sidebar-header);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+</style>
+
+<div class="admin-sidebar shadow">
+    <div class="sidebar-header p-4">
+        <h4 class="mb-0 text-white fw-bold">
+            <i class="bi bi-speedometer2 me-2"></i>Admin Panel
+        </h4>
+    </div>
+
+    <div class="menu-section py-3 pb-5 mb-5">
+        <div class="menu-section-title px-4 py-2">Menu Main</div>
+
+        <nav class="nav flex-column">
+            <a href="@Url.Action("Dashboard", "Admin")"
+               class="nav-link px-4 py-3 @(isDashboardActive ? "active" : "")"
+               aria-current="@(isDashboardActive ? "page" : null)">
+                <i class="bi bi-house-door me-2"></i> Dashboard
+            </a>
+
+            <a href="@Url.Action("Products", "Admin")"
+               class="nav-link px-4 py-3 @(isProductsActive ? "active" : "")"
+               aria-current="@(isProductsActive ? "page" : null)">
+                <i class="bi bi-box-seam me-2"></i> Products
+            </a>
+
+            <a href="@Url.Action("Index", "Categories")"
+               class="nav-link px-4 py-3 @(isCategoriesActive ? "active" : "")"
+               aria-current="@(isCategoriesActive ? "page" : null)">
+                <i class="bi bi-folder me-2"></i> Category
+            </a>
+
+            <a href="@Url.Action("Index", "Banners")"
+               class="nav-link px-4 py-3 @(isBannersActive ? "active" : "")"
+               aria-current="@(isBannersActive ? "page" : null)">
+                <i class="bi bi-image me-2"></i> Banners
+            </a>
+
+            <a href="@Url.Action("Index", "Brands")"
+               class="nav-link px-4 py-3 @(isBrandsActive ? "active" : "")"
+               aria-current="@(isBrandsActive ? "page" : null)">
+                <i class="bi bi-tags me-2"></i> Brands
+            </a>
+
+            <a href="@Url.Action("Orders", "Admin")"
+               class="nav-link px-4 py-3 @(isOrdersActive ? "active" : "")"
+               aria-current="@(isOrdersActive ? "page" : null)">
+                <i class="bi bi-cart-check me-2"></i> Orders
+            </a>
+
+            <a href="@Url.Action("Index", "DiscountCodes")"
+               class="nav-link px-4 py-3 @(isDiscountCodesActive ? "active" : "")"
+               aria-current="@(isDiscountCodesActive ? "page" : null)">
+                <i class="bi bi-ticket-perforated me-2"></i> Discount Codes
+            </a>
+
+            <a href="#" class="nav-link px-4 py-3 disabled" tabindex="-1" aria-disabled="true">
+                <i class="bi bi-chat-left-text me-2"></i> Comments
+            </a>
+
+            <a href="@Url.Action("Users", "Admin")"
+               class="nav-link px-4 py-3 @(isUsersActive ? "active" : "")"
+               aria-current="@(isUsersActive ? "page" : null)">
+                <i class="bi bi-people me-2"></i> Members
+            </a>
+        </nav>
+    </div>
+
+    <div class="sidebar-footer p-3">
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-light btn-sm w-100 mb-2">
+            <i class="bi bi-arrow-left me-2"></i>Back to Website
+        </a>
+        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline w-100">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-light btn-sm w-100">
+                <i class="bi bi-box-arrow-right me-2"></i>Logout
+            </button>
+        </form>
+    </div>
+</div>

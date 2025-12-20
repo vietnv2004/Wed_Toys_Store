@@ -1,0 +1,188 @@
+﻿@model Wed_Toys_Store.Models.Brand
+
+@{
+    ViewData["Title"] = "Delete Brand";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+    <style>
+        /* 1. MÀU SẮC & BIẾN (Giữ nguyên) */
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* 2. SIDEBAR (Giữ nguyên để đảm bảo layout không vỡ) */
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--admin-sidebar-bg);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+            .admin-sidebar .sidebar-header {
+                padding: 20px;
+                background-color: var(--admin-sidebar-header);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            /* Giữ lại các class hỗ trợ partial view cũ */
+            .admin-sidebar .menu-section-title {
+                padding: 10px 20px;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: rgba(255, 255, 255, 0.5);
+                font-weight: 700;
+            }
+
+            .admin-sidebar .menu-item {
+                padding: 12px 20px;
+                color: rgba(255, 255, 255, 0.8);
+                text-decoration: none;
+                display: block;
+                border-left: 3px solid transparent;
+                transition: all 0.3s;
+            }
+
+                .admin-sidebar .menu-item:hover {
+                    background-color: var(--admin-sidebar-hover);
+                    color: white;
+                    border-left-color: var(--admin-sidebar-active);
+                }
+
+                .admin-sidebar .menu-item.active {
+                    background-color: var(--admin-sidebar-active);
+                    color: white;
+                    border-left-color: white;
+                }
+
+        /* 3. MAIN LAYOUT */
+        .admin-main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        /* Custom utility cho ảnh nếu Bootstrap chưa hỗ trợ object-fit (phòng hờ) */
+        .object-fit-contain {
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <main class="admin-main">
+        <div class="container-fluid p-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0 text-danger fw-bold">
+                    <i class="bi bi-trash3 me-2"></i>Delete Brand
+                </h2>
+                <a href="@Url.Action("Index", "Brands")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to List
+                </a>
+            </div>
+
+            <div class="card shadow-sm border-danger border-0 border-top border-4 rounded-3">
+                <div class="card-body p-4">
+
+                    <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                        <div>
+                            <strong>Warning:</strong> You are about to delete this brand permanently. This action cannot be undone.
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <div class="mb-4 pb-3 border-bottom">
+                                <label class="text-uppercase text-muted small fw-bold mb-1">ID Reference</label>
+                                <div class="fs-5 font-monospace">#@Model.Id</div>
+                            </div>
+
+                            <div class="mb-4 pb-3 border-bottom">
+                                <label class="text-uppercase text-muted small fw-bold mb-1">Brand Name</label>
+                                <div class="fs-4 fw-semibold text-dark">@Model.Name</div>
+                            </div>
+
+                            <div class="mb-4 pb-3 border-bottom">
+                                <label class="text-uppercase text-muted small fw-bold mb-1">Current Status</label>
+                                <div>
+                                    @if (Model.IsActive)
+                                    {
+                                        <span class="badge bg-success rounded-pill px-3 py-2"><i class="bi bi-check-circle me-1"></i> Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary rounded-pill px-3 py-2"><i class="bi bi-dash-circle me-1"></i> Inactive</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <form asp-action="Delete" method="post" class="mt-5">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" asp-for="Id" />
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-danger btn-lg px-4">
+                                        <i class="bi bi-trash me-2"></i>Confirm Delete
+                                    </button>
+                                    <a href="@Url.Action("Index", "Brands")" class="btn btn-light btn-lg px-4 text-secondary">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-4">
+                            @if (!string.IsNullOrEmpty(Model.LogoUrl))
+                            {
+                                <div class="card bg-light border-0 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                                        <label class="text-uppercase text-muted small fw-bold mb-3">Brand Logo</label>
+
+                                        <div class="p-3 bg-white rounded-3 shadow-sm d-flex align-items-center justify-content-center border"
+                                             style="width: 220px; height: 140px;">
+                                            <img src="@Model.LogoUrl"
+                                                 alt="@Model.Name"
+                                                 class="img-fluid object-fit-contain w-100 h-100"
+                                                 onerror="this.src='https://via.placeholder.com/200x120?text=No+Image'">
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

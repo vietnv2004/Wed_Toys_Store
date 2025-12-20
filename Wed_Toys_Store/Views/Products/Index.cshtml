@@ -1,0 +1,269 @@
+@model IEnumerable<Wed_Toys_Store.Models.Product>
+
+@{
+    ViewData["Title"] = "All Products";
+    var totalProducts = ViewBag.TotalProducts ?? Model.Count();
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- SIDEBAR FILTERS -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold">FILTERS</h5>
+                </div>
+                <div class="card-body">
+                    <form method="get" id="filterForm">
+                        <!-- AGE -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">AGE</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="ageAll" value=""
+                                       @(string.IsNullOrEmpty(ViewBag.SelectedAgeRange?.ToString()) ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label fw-bold" for="ageAll">All</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="age0-6" value="0 - 6 Months" 
+                                       @(ViewBag.SelectedAgeRange == "0 - 6 Months" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="age0-6">0 - 6 Months</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="age6-12" value="6 - 12 Months"
+                                       @(ViewBag.SelectedAgeRange == "6 - 12 Months" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="age6-12">6 - 12 Months</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="age1-2" value="1 - 2 Years"
+                                       @(ViewBag.SelectedAgeRange == "1 - 2 Years" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="age1-2">1 - 2 Years</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="age3-6" value="3 - 6 Years"
+                                       @(ViewBag.SelectedAgeRange == "3 - 6 Years" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="age3-6">3 - 6 Years</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="ageRange" id="age6plus" value="Over 6 Years"
+                                       @(ViewBag.SelectedAgeRange == "Over 6 Years" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="age6plus">Over 6 Years</label>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- BRAND -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">BRAND</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="brand" id="brandAll" value=""
+                                       @(string.IsNullOrEmpty(ViewBag.SelectedBrand?.ToString()) ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label fw-bold" for="brandAll">All</label>
+                            </div>
+                            @if (ViewBag.Brands != null)
+                            {
+                                @foreach (var brand in ViewBag.Brands)
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="brand" id="brand_@brand" value="@brand"
+                                               @(ViewBag.SelectedBrand == brand ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                        <label class="form-check-label" for="brand_@brand">@brand</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        <hr>
+
+                        <!-- PRICE -->
+                        <div class="mb-4">
+                            <h6 class="fw-bold mb-3">PRICE (VND)</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="priceAll" value=""
+                                       @(string.IsNullOrEmpty(ViewBag.SelectedPriceRange?.ToString()) ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label fw-bold" for="priceAll">All</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="priceUnder300" value="under300"
+                                       @(ViewBag.SelectedPriceRange == "under300" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="priceUnder300">Under 300,000₫</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price300-500" value="300-500"
+                                       @(ViewBag.SelectedPriceRange == "300-500" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="price300-500">300,000₫ - 500,000₫</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price500-700" value="500-700"
+                                       @(ViewBag.SelectedPriceRange == "500-700" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="price500-700">500,000₫ - 700,000₫</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="price700-1000" value="700-1000"
+                                       @(ViewBag.SelectedPriceRange == "700-1000" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="price700-1000">700,000₫ - 1,000,000₫</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="priceRange" id="priceOver1000" value="over1000"
+                                       @(ViewBag.SelectedPriceRange == "over1000" ? "checked" : "") onchange="document.getElementById('filterForm').submit();">
+                                <label class="form-check-label" for="priceOver1000">Over 1,000,000₫</label>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="sortBy" value="@ViewBag.SortBy" />
+                        @if (ViewBag.SelectedCategoryId != null)
+                        {
+                            <input type="hidden" name="categoryId" value="@ViewBag.SelectedCategoryId" />
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCT LIST -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">All Products (@totalProducts products)</h5>
+                <div class="d-flex align-items-center gap-2">
+                    <span>Sort by:</span>
+                    <select class="form-select form-select-sm" style="width: auto;" onchange="updateSortBy(this.value)">
+                        <option value="">Select</option>
+                        @{
+                            var sortBy = ViewBag.SortBy?.ToString() ?? "";
+                        }
+                        @if (sortBy == "name")
+                        {
+                            <option value="name" selected>Name A-Z</option>
+                        }
+                        else
+                        {
+                            <option value="name">Name A-Z</option>
+                        }
+                        @if (sortBy == "price-asc")
+                        {
+                            <option value="price-asc" selected>Price: Low to High</option>
+                        }
+                        else
+                        {
+                            <option value="price-asc">Price: Low to High</option>
+                        }
+                        @if (sortBy == "price-desc")
+                        {
+                            <option value="price-desc" selected>Price: High to Low</option>
+                        }
+                        else
+                        {
+                            <option value="price-desc">Price: High to Low</option>
+                        }
+                        @if (sortBy == "newest")
+                        {
+                            <option value="newest" selected>Newest</option>
+                        }
+                        else
+                        {
+                            <option value="newest">Newest</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100 position-relative border border-secondary border-opacity-25">
+                            @if (item.IsNew)
+                            {
+                                <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
+                            }
+                            <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
+                                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                {
+                                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                        <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
+                                    </div>
+                                }
+                            </a>
+                            <div class="card-body d-flex flex-column">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none text-dark">
+                                    <h6 class="card-title fw-bold">@item.Name</h6>
+                                </a>
+                                <p class="card-text text-muted small">@(item.Description?.Length > 60 ? item.Description.Substring(0, 60) + "..." : item.Description)</p>
+                                <div class="mt-auto">
+                                    <p class="card-text mb-2">
+                                        <strong class="text-danger fs-5">@item.Price.ToString("N0")₫</strong>
+                                    </p>
+                                    <div class="d-flex gap-2">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary flex-fill">
+                                            <i class="bi bi-eye me-1"></i> View
+                                        </a>
+                                        <button class="btn btn-primary" onclick="addToCart(@item.Id)">
+                                            <i class="bi bi-cart-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle"></i> No products found.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateSortBy(value) {
+        const form = document.getElementById('filterForm');
+        const sortInput = form.querySelector('input[name="sortBy"]');
+        sortInput.value = value;
+        form.submit();
+    }
+
+    function addToCart(productId) {
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        fetch('/Cart/AddToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `productId=${productId}&quantity=1&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update cart badge
+                const cartBadge = document.querySelector('.cart-badge-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.cartCount || 0;
+                    cartBadge.style.display = (data.cartCount > 0) ? 'flex' : 'none';
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding to cart.');
+        });
+    }
+</script>
+
+<style>
+    /* Card hover effect - chỉ giữ animation */
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    }
+</style>

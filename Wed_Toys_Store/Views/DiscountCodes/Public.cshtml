@@ -1,0 +1,280 @@
+@model IEnumerable<Wed_Toys_Store.Models.DiscountCode>
+
+@{
+    ViewData["Title"] = "Discount Codes";
+    Layout = "_Layout";
+}
+
+<style>
+    .search-box {
+        border: 2px solid #4169E1;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    .search-box:focus {
+        outline: none;
+        border-color: #4169E1;
+        box-shadow: 0 0 0 0.2rem rgba(65, 105, 225, 0.15);
+    }
+    
+    .voucher-card {
+        background: white;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .voucher-card:hover {
+        box-shadow: 0 4px 12px rgba(65, 105, 225, 0.15);
+        transform: translateY(-2px);
+        border-color: #4169E1;
+    }
+    
+    .voucher-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: white;
+        flex-shrink: 0;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .voucher-amount {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .voucher-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 4px;
+        line-height: 1.4;
+    }
+    
+    .voucher-expiry {
+        font-size: 13px;
+        color: #666;
+    }
+    
+    .use-now-btn {
+        color: #4169E1;
+        font-weight: 600;
+        font-size: 14px;
+        background: transparent;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .use-now-btn:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        transform: scale(1.05);
+    }
+    
+    .divider-dots {
+        border-left: 2px dotted #e0e0e0;
+        height: 100%;
+    }
+    
+    .tab-btn {
+        border-bottom: 3px solid transparent !important;
+        transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+        border-bottom-color: #4169E1 !important;
+        color: #4169E1 !important;
+    }
+</style>
+
+<div class="container my-4">
+    <!-- Search Bar -->
+    <div class="mb-4">
+        <div class="position-relative">
+            <i class="bi bi-search position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%); color: #4169E1;"></i>
+            <input type="text" 
+                   id="searchInput" 
+                   class="form-control search-box ps-5" 
+                   placeholder="Search discount codes..."
+                   onkeyup="filterVouchers()">
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="d-flex gap-3 mb-4 border-bottom">
+        <button class="btn btn-link text-decoration-none pb-2 tab-btn active fw-semibold">
+            <i class="bi bi-gift me-2"></i>Discount Codes
+        </button>
+    </div>
+
+    <!-- Voucher List -->
+    @if (Model != null && Model.Any())
+    {
+        <div id="voucherList">
+            @foreach (var discount in Model)
+            {
+                var isExpired = discount.ExpiryDate.Date < DateTime.UtcNow.Date || !discount.IsActive;
+                <div class="voucher-card mb-3 p-3 voucher-item" data-code="@discount.Code.ToLower()" data-description="@discount.Description?.ToLower()">
+                    <div class="row g-0">
+                        <!-- Icon -->
+                        <div class="col-auto">
+                            <div class="voucher-icon">
+                                <i class="bi bi-ticket-perforated"></i>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="col ps-3">
+                            <div class="d-flex justify-content-between align-items-start h-100">
+                                <div class="flex-grow-1">
+                                    <div class="voucher-title">
+                                        Discount @discount.DiscountAmount.ToString("N0")₫ @(!string.IsNullOrEmpty(discount.Description) ? discount.Description : "for your order")
+                                    </div>
+                                    <div class="voucher-expiry">
+                                        Valid until @discount.ExpiryDate.ToString("dd/MM/yyyy")
+                                    </div>
+                                    @if (discount.MinOrderAmount > 0)
+                                    {
+                                        <div class="text-muted small mt-1">
+                                            Min order: @discount.MinOrderAmount.ToString("N0")₫
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <!-- Copy Button -->
+                                <div class="text-end ms-3">
+                                    @if (!isExpired)
+                                    {
+                                        <button class="use-now-btn" onclick="copyVoucherCode('@discount.Code', this)">
+                                            <i class="bi bi-clipboard me-1"></i>Copy code
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Expired</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="card shadow-sm" style="display: none;">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-search fs-1 d-block mb-3 text-muted"></i>
+                <p class="text-muted">No matching discount codes found.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-inbox fs-1 d-block mb-3 text-muted"></i>
+                <p class="text-muted">No discount codes available.</p>
+            </div>
+        </div>
+    }
+    
+    <!-- Total Count -->
+    <div class="text-center mt-4 text-muted">
+        <span id="totalCount">@Model?.Count()</span> codes available
+    </div>
+</div>
+
+<script>
+    function filterVouchers() {
+        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+        const vouchers = document.querySelectorAll('.voucher-item');
+        let visibleCount = 0;
+        
+        vouchers.forEach(function(voucher) {
+            const code = voucher.getAttribute('data-code');
+            const description = voucher.getAttribute('data-description');
+            
+            if (code.includes(searchTerm) || description.includes(searchTerm)) {
+                voucher.style.display = 'block';
+                visibleCount++;
+            } else {
+                voucher.style.display = 'none';
+            }
+        });
+        
+        // Update count
+        document.getElementById('totalCount').textContent = visibleCount;
+        
+        // Show/hide empty state
+        const emptyState = document.getElementById('emptyState');
+            if (visibleCount === 0) {
+            emptyState.style.display = 'block';
+        } else {
+            emptyState.style.display = 'none';
+        }
+    }
+    
+        function copyVoucherCode(code, btn) {
+        // Copy to clipboard
+            navigator.clipboard.writeText(code).then(function() {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check-circle me-1"></i>Copied';
+            btn.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+            btn.style.color = 'white';
+            
+            // Show toast notification
+            showToast('Copied code "' + code + '" to clipboard!');
+            
+            setTimeout(function() {
+                btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy code';
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+            }, function(err) {
+            console.error('Error copying code: ', err);
+            alert('Unable to copy code. Please try again.');
+        });
+    }
+    
+    function showToast(message) {
+        // Create toast element
+        const toast = document.createElement('div');
+        toast.className = 'position-fixed top-0 start-50 translate-middle-x mt-3';
+        toast.style.zIndex = '9999';
+        toast.innerHTML = `
+            <div class="alert shadow-lg" role="alert" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;">
+                <i class="bi bi-check-circle me-2"></i>${message}
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Remove after 3 seconds
+        setTimeout(function() {
+            toast.remove();
+        }, 3000);
+    }
+</script>
+
+
+

@@ -1,0 +1,208 @@
+﻿@model Wed_Toys_Store.Models.Brand
+
+@{
+    ViewData["Title"] = "Edit Brand";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+    <style>
+        /* 1. ĐỊNH NGHĨA MÀU SẮC (Giữ nguyên theo yêu cầu) */
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        /* 2. SIDEBAR (Giữ CSS này vì nó điều khiển Partial View _AdminSidebar) */
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background-color: var(--admin-sidebar-bg);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+            /* Chỉ giữ lại các class cần thiết cho Sidebar nếu Partial dùng class cũ */
+            .admin-sidebar .sidebar-header {
+                padding: 20px;
+                background-color: var(--admin-sidebar-header);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .admin-sidebar .menu-section-title {
+                padding: 10px 20px;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: rgba(255, 255, 255, 0.5);
+                font-weight: 700;
+            }
+
+            .admin-sidebar .menu-item {
+                padding: 12px 20px;
+                color: rgba(255, 255, 255, 0.8);
+                text-decoration: none;
+                display: block;
+                border-left: 3px solid transparent;
+                transition: all 0.3s;
+            }
+
+                .admin-sidebar .menu-item:hover {
+                    background-color: var(--admin-sidebar-hover);
+                    color: white;
+                    border-left-color: var(--admin-sidebar-active);
+                }
+
+                .admin-sidebar .menu-item.active {
+                    background-color: var(--admin-sidebar-active);
+                    color: white;
+                    border-left-color: white;
+                }
+
+        /* 3. MAIN LAYOUT (Dùng CSS biến để tính toán margin) */
+        .admin-main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        /* Custom utility để hỗ trợ object-fit nếu bootstrap bản cũ chưa có */
+        .object-fit-contain {
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <main class="admin-main">
+        <div class="container-fluid p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0 text-dark fw-bold">
+                    <i class="bi bi-pencil-square me-2 text-primary"></i>Edit Brand
+                </h2>
+                <a href="@Url.Action("Index", "Brands")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to List
+                </a>
+            </div>
+
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-body p-4">
+                    <form asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="mb-3">
+                                    <label asp-for="Name" class="form-label fw-semibold">Brand Name <span class="text-danger">*</span></label>
+                                    <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter brand name" required />
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="LogoUrl" class="form-label fw-semibold">Logo URL <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="bi bi-link-45deg"></i></span>
+                                        <input asp-for="LogoUrl" class="form-control form-control-lg" placeholder="https://example.com/logo.png" required id="logoUrlInput" />
+                                    </div>
+                                    <div class="form-text text-muted">Enter the full URL of the brand logo</div>
+                                    <span asp-validation-for="LogoUrl" class="text-danger small"></span>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label asp-for="DisplayOrder" class="form-label fw-semibold">Display Order</label>
+                                        <input asp-for="DisplayOrder" class="form-control" type="number" min="0" />
+                                        <div class="form-text">Lower number displays first</div>
+                                        <span asp-validation-for="DisplayOrder" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold d-block">Status</label>
+                                        <div class="form-check form-switch mt-2">
+                                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch" style="cursor: pointer;">
+                                            <label class="form-check-label ms-2" asp-for="IsActive">Active</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 mt-4 pt-2 border-top">
+                                    <button type="submit" class="btn btn-primary btn-lg px-4">
+                                        <i class="bi bi-check-circle me-2"></i>Update
+                                    </button>
+                                    <a href="@Url.Action("Index", "Brands")" class="btn btn-light btn-lg px-4 text-secondary">
+                                        <i class="bi bi-x-circle me-2"></i>Cancel
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="card bg-light border-0 h-100">
+                                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                                        <h6 class="card-title text-muted mb-3 text-uppercase small fw-bold">Logo Preview</h6>
+
+                                        <div class="p-2 bg-white rounded-3 border border-2 border-dashed d-flex align-items-center justify-content-center mb-3"
+                                             style="width: 200px; height: 120px;">
+                                            <img id="logoPreview" src="@Model.LogoUrl"
+                                                 alt="Logo Preview"
+                                                 class="img-fluid object-fit-contain h-100 w-100"
+                                                 onerror="this.style.display='none'; document.getElementById('previewText').classList.remove('d-none');" />
+                                            <p class="text-muted small mb-0 d-none" id="previewText">
+                                                <i class="bi bi-image fs-1 d-block mb-2 text-secondary opacity-25"></i>
+                                                Invalid or empty URL
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('logoUrlInput').addEventListener('input', function() {
+            const url = this.value;
+            const preview = document.getElementById('logoPreview');
+            const previewText = document.getElementById('previewText');
+
+            if (url && url.startsWith('http')) {
+                preview.src = url;
+                preview.style.display = 'block';
+                previewText.classList.add('d-none');
+            } else {
+                preview.style.display = 'none';
+                previewText.classList.remove('d-none');
+            }
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+</body>
+</html>

@@ -1,0 +1,129 @@
+@model Wed_Toys_Store.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="fw-bold mb-0">
+                        <i class="bi bi-person-circle me-2"></i>My Profile
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="Profile" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="row g-3">
+                            <!-- First Name -->
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                <input asp-for="FirstName" class="form-control form-control-lg rounded-3" placeholder="Enter your first name" required>
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                <input asp-for="LastName" class="form-control form-control-lg rounded-3" placeholder="Enter your last name" required>
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                <input asp-for="Email" type="email" class="form-control form-control-lg rounded-3" placeholder="Enter your email" required>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Phone Number -->
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label fw-semibold">Phone Number</label>
+                                <input asp-for="PhoneNumber" type="tel" class="form-control form-control-lg rounded-3" placeholder="Enter your phone number">
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Child's Birthday -->
+                            <div class="col-md-6">
+                                <label asp-for="ChildBirthday" class="form-label fw-semibold">Child's Birthday</label>
+                                <input asp-for="ChildBirthday" type="date" class="form-control form-control-lg rounded-3">
+                                <span asp-validation-for="ChildBirthday" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="col-12">
+                                <label asp-for="Address" class="form-label fw-semibold">Address</label>
+                                <textarea asp-for="Address" class="form-control form-control-lg rounded-3" rows="3" placeholder="Enter your address"></textarea>
+                                <span asp-validation-for="Address" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Account Created Date (Read-only) -->
+                            <div class="col-12">
+                                <div class="bg-light rounded-3 p-3">
+                                    <label class="form-label fw-semibold text-muted mb-2">Account Created</label>
+                                    <p class="mb-0">
+                                        <i class="bi bi-calendar3 me-2"></i>@Model.CreatedAt.ToString("MMMM dd, yyyy 'at' HH:mm")
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-top">
+                            <div class="d-flex gap-3">
+                                <button type="submit" class="btn btn-primary btn-lg flex-fill">
+                                    <i class="bi bi-save me-2"></i>Save Changes
+                                </button>
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Account Actions -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="fw-bold mb-0 text-primary">Account Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column gap-3">
+                        <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-outline-primary w-100 text-start">
+                            <i class="bi bi-key me-2"></i>Change Password
+                        </a>
+                        <a asp-controller="Orders" asp-action="History" class="btn btn-outline-primary w-100 text-start">
+                            <i class="bi bi-clock-history me-2"></i>View Order History
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+
+
+
+
+
+

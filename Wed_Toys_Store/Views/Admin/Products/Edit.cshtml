@@ -1,0 +1,349 @@
+@model Wed_Toys_Store.Models.Product
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = null;
+    var categories = ViewBag.Categories as IEnumerable<Wed_Toys_Store.Models.Category> ?? new List<Wed_Toys_Store.Models.Category>();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: var(--admin-sidebar-bg);
+            color: white;
+            padding: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .admin-sidebar .sidebar-header {
+            padding: 20px;
+            background-color: var(--admin-sidebar-header);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-sidebar .sidebar-header h4 {
+            margin: 0;
+            color: white;
+        }
+
+        .admin-sidebar .menu-section {
+            padding: 15px 0;
+        }
+
+        .admin-sidebar .menu-section-title {
+            padding: 10px 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        /* Bootstrap nav-link và menu-item styles */
+        .admin-sidebar .nav-link.menu-item,
+        .admin-sidebar .menu-item {
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8) !important;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .admin-sidebar .nav-link.menu-item:hover,
+        .admin-sidebar .menu-item:hover {
+            background-color: var(--admin-sidebar-hover);
+            color: white !important;
+            border-left-color: var(--admin-sidebar-active);
+        }
+
+        .admin-sidebar .nav-link.menu-item.active,
+        .admin-sidebar .menu-item.active {
+            background-color: var(--admin-sidebar-active);
+            color: white !important;
+            border-left-color: white;
+            font-weight: 600;
+        }
+
+        .admin-sidebar .nav-link.menu-item.disabled,
+        .admin-sidebar .menu-item.disabled {
+            color: rgba(255, 255, 255, 0.4) !important;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .admin-sidebar .nav-link.menu-item.disabled:hover,
+        .admin-sidebar .menu-item.disabled:hover {
+            background-color: transparent;
+            border-left-color: transparent;
+        }
+
+        .admin-sidebar .nav-link.menu-item i,
+        .admin-sidebar .menu-item i {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--admin-sidebar-header);
+        }
+
+        .admin-sidebar .sidebar-footer .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer .btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <div class="admin-content">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-pencil-square me-2"></i>Edit Product
+                </h2>
+                <a href="@Url.Action("Products", "Admin")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to List
+                </a>
+            </div>
+
+            <!-- Form -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="row g-3">
+                            <!-- Product Name -->
+                            <div class="col-md-12">
+                                <label asp-for="Name" class="form-label">Product Name <span class="text-danger">*</span></label>
+                                <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-md-12">
+                                <label asp-for="Description" class="form-label">Description</label>
+                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter product description"></textarea>
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="col-md-6">
+                                <label asp-for="CategoryId" class="form-label">Category <span class="text-danger">*</span></label>
+                                <select asp-for="CategoryId" class="form-select" asp-items="@(new SelectList(categories, "Id", "Name"))">
+                                    <option value="">-- Select Category --</option>
+                                </select>
+                                <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="col-md-6">
+                                <label asp-for="Price" class="form-label">Price <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input id="PriceInput" name="Price" class="form-control" type="text" placeholder="0.00" value="@Model.Price.ToString("N2")" />
+                                    <span class="input-group-text">₫</span>
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Stock -->
+                            <div class="col-md-6">
+                                <label asp-for="Stock" class="form-label">Stock Quantity</label>
+                                <input asp-for="Stock" class="form-control" type="number" min="0" />
+                                <span asp-validation-for="Stock" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Age Range -->
+                            <div class="col-md-6">
+                                <label asp-for="AgeRange" class="form-label">Age Range</label>
+                                <select asp-for="AgeRange" class="form-select">
+                                    <option value="">-- Select Age Range --</option>
+                                    <option value="0-6 Months">0-6 Months</option>
+                                    <option value="6-12 Months">6-12 Months</option>
+                                    <option value="1-2 Years">1-2 Years</option>
+                                    <option value="3-6 Years">3-6 Years</option>
+                                    <option value="Over 6 Years">Over 6 Years</option>
+                                    <option value="All Ages">All Ages</option>
+                                </select>
+                                <span asp-validation-for="AgeRange" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Brand -->
+                            <div class="col-md-6">
+                                <label asp-for="Brand" class="form-label">Brand</label>
+                                <select asp-for="Brand" class="form-select">
+                                    <option value="">-- Select Brand --</option>
+                                    @if (ViewBag.Brands != null)
+                                    {
+                                        @foreach (var brand in ViewBag.Brands)
+                                        {
+                                            @if (Model.Brand == brand)
+                                            {
+                                                <option value="@brand" selected>@brand</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@brand">@brand</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="Brand" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Image URL -->
+                            <div class="col-md-6">
+                                <label asp-for="ImageUrl" class="form-label">Image URL</label>
+                                <input asp-for="ImageUrl" class="form-control" type="url" placeholder="https://example.com/image.jpg" />
+                                <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Is New -->
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input asp-for="IsNew" class="form-check-input" type="checkbox" />
+                                    <label asp-for="IsNew" class="form-check-label">
+                                        Mark as New Product
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="mt-4 pt-3 border-top">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="@Url.Action("Products", "Admin")" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle me-2"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-2"></i>Update Product
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        // Format giá tiền với dấu phẩy khi nhập
+        document.addEventListener('DOMContentLoaded', function() {
+            const priceInput = document.getElementById('PriceInput');
+            
+            if (priceInput) {
+                // Format khi blur (rời khỏi input)
+                priceInput.addEventListener('blur', function() {
+                    formatPriceInput(this);
+                });
+                
+                // Cho phép nhập số và dấu chấm/phẩy
+                priceInput.addEventListener('input', function(e) {
+                    // Chỉ cho phép số, dấu chấm và dấu phẩy
+                    this.value = this.value.replace(/[^\d.,]/g, '');
+                });
+                
+                // Format khi submit form
+                const form = priceInput.closest('form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        // Loại bỏ dấu phẩy trước khi submit
+                        const rawValue = priceInput.value.replace(/,/g, '');
+                        priceInput.value = rawValue;
+                    });
+                }
+            }
+        });
+        
+        function formatPriceInput(input) {
+            // Loại bỏ tất cả dấu phẩy và khoảng trắng
+            let value = input.value.replace(/,/g, '').replace(/\s/g, '');
+            
+            // Chỉ giữ lại số và dấu chấm
+            value = value.replace(/[^\d.]/g, '');
+            
+            // Chỉ cho phép một dấu chấm
+            const parts = value.split('.');
+            if (parts.length > 2) {
+                value = parts[0] + '.' + parts.slice(1).join('');
+            }
+            
+            // Giới hạn 2 chữ số sau dấu chấm
+            if (parts.length === 2 && parts[1].length > 2) {
+                value = parts[0] + '.' + parts[1].substring(0, 2);
+            }
+            
+            // Format với dấu phẩy phân cách hàng nghìn
+            if (value && !isNaN(parseFloat(value))) {
+                const numValue = parseFloat(value);
+                const formatted = numValue.toLocaleString('en-US', {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 2
+                });
+                input.value = formatted;
+            } else if (value === '' || value === '.') {
+                input.value = value;
+            }
+        }
+    </script>
+</body>
+</html>
+

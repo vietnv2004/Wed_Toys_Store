@@ -1,0 +1,230 @@
+@model Wed_Toys_Store.Models.DiscountCode
+
+@{
+    ViewData["Title"] = "Edit Discount Code";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        .admin-main {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body class="bg-body-secondary">
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main min-vh-100">
+        <div class="container-fluid p-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0">
+                            <i class="bi bi-pencil-square me-2"></i>Edit Discount Code
+                        </h2>
+                        <a href="@Url.Action("Index", "DiscountCodes")" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to List
+                        </a>
+                    </div>
+
+                    <form asp-action="Edit" method="post" onsubmit="removeCommasBeforeSubmit()">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedAt" />
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Code" class="form-label fw-semibold">Discount Code <span class="text-danger">*</span></label>
+                                    <input asp-for="Code" 
+                                           class="form-control form-control-lg text-uppercase" 
+                                           placeholder="Enter discount code (max 20 characters)" 
+                                           maxlength="20"
+                                           id="codeInput"
+                                           oninput="updateCharCount()"
+                                           required
+                                           style="letter-spacing: 1px;">
+                                    <div class="d-flex justify-content-between">
+                                        <span asp-validation-for="Code" class="text-danger small"></span>
+                                        <small class="text-muted">
+                                            <span id="charCount">0</span>/20 characters
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="DiscountAmount" class="form-label fw-semibold">Discount Amount (VND) <span class="text-danger">*</span></label>
+                                        <input asp-for="DiscountAmount"
+                                               class="form-control form-control-lg"
+                                               type="text"
+                                               placeholder="20,000"
+                                               id="discountAmount"
+                                               oninput="formatCurrencyInput(this)"
+                                               autocomplete="off"
+                                               required>
+                                        <small class="form-text text-muted">Enter amount in VND. Use digits only; commas will be added automatically.</small>
+                                        <span asp-validation-for="DiscountAmount" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="MinOrderAmount" class="form-label fw-semibold">Minimum Order Amount (VND) <span class="text-danger">*</span></label>
+                                        <input asp-for="MinOrderAmount"
+                                               class="form-control form-control-lg"
+                                               type="text"
+                                               placeholder="399,000"
+                                               id="minOrder"
+                                               oninput="formatCurrencyInput(this)"
+                                               autocomplete="off"
+                                               required>
+                                        <small class="form-text text-muted">Minimum order value in VND. Use digits only; commas will be added automatically.</small>
+                                        <span asp-validation-for="MinOrderAmount" class="text-danger small"></span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label fw-semibold">Description</label>
+                                    <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description for this discount code"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="ExpiryDate" class="form-label fw-semibold">Expiry Date <span class="text-danger">*</span></label>
+                                        <input asp-for="ExpiryDate" class="form-control form-control-lg" type="datetime-local" value="@Model.ExpiryDate.ToString("yyyy-MM-ddTHH:mm")" required>
+                                        <span asp-validation-for="ExpiryDate" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Max Uses</label>
+                                        <input asp-for="MaxUsage" class="form-control form-control-lg" type="number" min="0" step="1" placeholder="0">
+                                        <small class="form-text text-muted">0 = unlimited, otherwise number of times this code can be used.</small>
+                                        <span asp-validation-for="MaxUsage" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">Status</label>
+                                        <div class="form-check form-switch mt-2">
+                                            <input asp-for="IsActive" class="form-check-input" type="checkbox" role="switch">
+                                            <label class="form-check-label ms-2" asp-for="IsActive">
+                                                Active
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-3 mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-check-circle me-2"></i>Update Discount Code
+                                    </button>
+                                    <a href="@Url.Action("Index", "DiscountCodes")" class="btn btn-outline-secondary btn-lg">
+                                        <i class="bi bi-x-circle me-2"></i>Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Allow numbers with thousand separators in jQuery validation
+        if (window.jQuery && $.validator && $.validator.methods && $.validator.methods.number) {
+            const originalNumberMethod = $.validator.methods.number;
+            $.validator.methods.number = function (value, element) {
+                if (typeof value === 'string') {
+                    value = value.replace(/,/g, '');
+                }
+                return originalNumberMethod.call(this, value, element);
+            };
+        }
+
+        // Update character count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharCount();
+
+            // Normalize any existing numeric values (after validation error)
+            ['discountAmount', 'minOrder'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && el.value) {
+                    formatCurrencyInput(el);
+                }
+            });
+
+            // Đảm bảo loại bỏ dấu phẩy trước khi submit (backup handler)
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    removeCommasBeforeSubmit();
+                });
+            }
+        });
+        
+        function updateCharCount() {
+            const input = document.getElementById('codeInput');
+            const charCount = document.getElementById('charCount');
+            const currentLength = input.value.length;
+            charCount.textContent = currentLength;
+            
+            // Change color when approaching 20-char limit
+            if (currentLength >= 15 && currentLength < 20) {
+                charCount.classList.add('text-warning');
+                charCount.classList.remove('text-danger');
+            } else if (currentLength === 20) {
+                charCount.classList.remove('text-warning');
+                charCount.classList.add('text-danger');
+            } else {
+                charCount.classList.remove('text-warning');
+                charCount.classList.remove('text-danger');
+            }
+        }
+
+        // Format input as VND with thousand separators while typing
+        function formatCurrencyInput(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (!value) {
+                input.value = '';
+                return;
+            }
+            input.value = parseInt(value, 10).toLocaleString('en-US');
+        }
+
+        // Hàm loại bỏ dấu phẩy trước khi submit form
+        function removeCommasBeforeSubmit() {
+            const discountAmountEl = document.getElementById('discountAmount');
+            const minOrderEl = document.getElementById('minOrder');
+            
+            if (discountAmountEl && discountAmountEl.value) {
+                // Loại bỏ tất cả ký tự không phải số (bao gồm dấu phẩy)
+                discountAmountEl.value = discountAmountEl.value.replace(/[^\d]/g, '');
+            }
+            
+            if (minOrderEl && minOrderEl.value) {
+                // Loại bỏ tất cả ký tự không phải số (bao gồm dấu phẩy)
+                minOrderEl.value = minOrderEl.value.replace(/[^\d]/g, '');
+            }
+            
+            return true; // Cho phép form submit tiếp tục
+        }
+    </script>
+</body>
+</html>
+
+
+

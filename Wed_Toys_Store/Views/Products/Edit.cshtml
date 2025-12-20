@@ -1,0 +1,123 @@
+@model Wed_Toys_Store.Models.Product
+
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="container mt-4">
+    <h2>Edit Product</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="CreatedAt" />
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Price" class="form-label"></label>
+                        <input asp-for="Price" class="form-control" type="number" step="0.01" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Stock" class="form-label"></label>
+                        <input asp-for="Stock" class="form-control" type="number" />
+                        <span asp-validation-for="Stock" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <div class="mt-2">
+                            <img src="@Model.ImageUrl" alt="Preview" style="max-width: 300px; max-height: 200px; object-fit: cover;" class="img-thumbnail">
+                        </div>
+                    }
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CategoryId" class="form-label"></label>
+                    <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AgeRange" class="form-label">Age Range</label>
+                        <select asp-for="AgeRange" class="form-select">
+                            <option value="">-- Select age range --</option>
+                            <option value="0 - 6 Months">0 - 6 Months</option>
+                            <option value="6 - 12 Months">6 - 12 Months</option>
+                            <option value="1 - 2 Years">1 - 2 Years</option>
+                            <option value="3 - 6 Years">3 - 6 Years</option>
+                            <option value="Over 6 Years">Over 6 Years</option>
+                            <option value="All Ages">All Ages</option>
+                        </select>
+                        <span asp-validation-for="AgeRange" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Brand" class="form-label">Brand</label>
+                        <select asp-for="Brand" class="form-select">
+                            <option value="">-- Select Brand --</option>
+                            @if (ViewBag.Brands != null)
+                            {
+                                @foreach (var brand in ViewBag.Brands)
+                                {
+                                    @if (Model.Brand == brand)
+                                    {
+                                        <option value="@brand" selected>@brand</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@brand">@brand</option>
+                                    }
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Brand" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check form-switch">
+                        <input asp-for="IsNew" class="form-check-input" type="checkbox" />
+                        <label class="form-check-label" asp-for="IsNew">
+                            Mark as new product (display "New" tag)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

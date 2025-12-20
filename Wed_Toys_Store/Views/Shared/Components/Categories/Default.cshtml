@@ -1,0 +1,22 @@
+@model IEnumerable<Wed_Toys_Store.Models.Category>
+
+<ul class="dropdown-menu dropdown-menu-start shadow rounded-3 border-0" aria-labelledby="categoriesDropdown" id="categoriesMenuList" style="min-width: 250px;">
+    <li>
+        <a class="dropdown-item fw-bold" asp-controller="Products" asp-action="Index">
+            All Categories
+        </a>
+    </li>
+    @if (Model != null && Model.Any())
+    {
+        <li><hr class="dropdown-divider"></li>
+        @foreach (var category in Model)
+        {
+            <li>
+                <a class="dropdown-item" asp-controller="Products" asp-action="Index" asp-route-categoryId="@category.Id">
+                    @category.Name
+                </a>
+            </li>
+        }
+    }
+</ul>
+

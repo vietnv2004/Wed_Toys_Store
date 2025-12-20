@@ -1,0 +1,141 @@
+@model IEnumerable<Wed_Toys_Store.Models.FavoriteProduct>
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    ViewData["Title"] = "Favorite Products";
+    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-primary mb-0">
+                    <i class="bi bi-heart-fill text-danger me-2"></i>My Favorite Products
+                </h2>
+                <span class="badge bg-danger fs-6">@Model.Count() @(Model.Count() == 1 ? "item" : "items")</span>
+            </div>
+        </div>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <i class="bi bi-heart text-muted display-1"></i>
+                        <h4 class="mt-4 mb-3">No favorite products yet</h4>
+                        <p class="text-muted mb-4">Start adding products to your favorites to see them here.</p>
+                        <a asp-controller="Products" asp-action="Index" class="btn btn-primary btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Browse Products
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="row g-4">
+            @foreach (var favorite in Model)
+            {
+                if (favorite.Product != null)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card h-100 border shadow-sm position-relative">
+                            @if (favorite.Product.IsNew)
+                            {
+                                <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
+                            }
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@favorite.Product.Id" class="text-decoration-none">
+                                @if (!string.IsNullOrEmpty(favorite.Product.ImageUrl))
+                                {
+                                    <img src="@favorite.Product.ImageUrl" class="card-img-top" alt="@favorite.Product.Name" style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                        <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+                                    </div>
+                                }
+                            </a>
+                            <div class="card-body d-flex flex-column">
+                                <a asp-controller="Products" asp-action="Details" asp-route-id="@favorite.Product.Id" class="text-decoration-none text-dark">
+                                    <h6 class="card-title fw-bold mb-2">@favorite.Product.Name</h6>
+                                </a>
+                                @if (favorite.Product.Category != null)
+                                {
+                                    <p class="text-muted small mb-2">
+                                        <i class="bi bi-tag me-1"></i>@favorite.Product.Category.Name
+                                    </p>
+                                }
+                                @if (!string.IsNullOrEmpty(favorite.Product.Brand))
+                                {
+                                    <p class="text-muted small mb-2">
+                                        <i class="bi bi-award me-1"></i>@favorite.Product.Brand
+                                    </p>
+                                }
+                                <div class="mt-auto">
+                                    <p class="card-text mb-2">
+                                        <strong class="text-danger fs-5">@favorite.Product.Price.ToString("N0")₫</strong>
+                                    </p>
+                                    @if (favorite.Product.Stock > 0)
+                                    {
+                                        <span class="badge bg-success mb-2">In Stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger mb-2">Out of Stock</span>
+                                    }
+                                    <div class="d-flex gap-2 mt-3">
+                                        <a asp-controller="Products" asp-action="Details" asp-route-id="@favorite.Product.Id" class="btn btn-primary btn-sm flex-fill">
+                                            <i class="bi bi-eye me-1"></i>View Details
+                                        </a>
+                                        <form asp-action="RemoveFromFavoritesList" method="post" class="d-inline">
+                                            <input type="hidden" name="id" value="@favorite.Id" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Remove this product from favorites?');">
+                                                <i class="bi bi-heart-fill"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0 text-muted small">
+                                <i class="bi bi-clock me-1"></i>Added @favorite.AddedAt.ToString("MMM dd, yyyy")
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
+
+<input type="hidden" name="__RequestVerificationToken" value="@token" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

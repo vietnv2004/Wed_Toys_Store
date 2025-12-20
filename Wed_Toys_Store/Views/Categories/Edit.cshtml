@@ -1,0 +1,137 @@
+@model Wed_Toys_Store.Models.Category
+
+@{
+    ViewData["Title"] = "Edit Category";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+        /* --- Admin Layout Styles --- */
+        :root {
+            --admin-sidebar-width: 250px;
+            --admin-primary: #4169E1;
+            --admin-primary-hover: #3556C7;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--admin-sidebar-width);
+            background-color: var(--admin-primary);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .admin-main {
+            margin-left: var(--admin-sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <div class="admin-main">
+        <div class="admin-content container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0 text-primary">
+                    <i class="bi bi-pencil-square me-2"></i>Edit Category
+                </h2>
+                <a href="@Url.Action("Index", "Categories")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom py-3">
+                    <h5 class="card-title mb-0">Update Information</h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row">
+                        <div class="row">
+                        <div class="row">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="mb-3">
+                                    <label asp-for="Name" class="form-label fw-bold">Category Name <span class="text-danger">*</span></label>
+                                    <input asp-for="Name" class="form-control" placeholder="Enter category name" />
+                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Description" class="form-label fw-bold">Description</label>
+                                    <textarea asp-for="Description" class="form-control" rows="5" placeholder="Enter description (optional)"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label text-muted small">Category ID</label>
+                                    <input type="text" class="form-control-plaintext text-muted" value="@Model.Id" readonly>
+                                </div>
+
+                                <div class="d-flex gap-2 pt-2 border-top">
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="bi bi-save me-2"></i>Save Changes
+                                    </button>
+                                    <a href="@Url.Action("Index", "Categories")" class="btn btn-light px-4">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 d-none d-lg-block">
+                                <div class="alert alert-info">
+                                    <h6 class="alert-heading"><i class="bi bi-lightbulb me-2"></i>Note:</h6>
+                                    <p class="small mb-0">
+                                        Updating the category name will affect all products currently assigned to this category. Please ensure the new name is accurate.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+</body>
+</html>

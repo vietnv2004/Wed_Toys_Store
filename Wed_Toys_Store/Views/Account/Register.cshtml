@@ -1,0 +1,164 @@
+@model Wed_Toys_Store.Controllers.RegisterViewModel
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4 fw-bold" style="color: #3b82f6;">CREATE ACCOUNT</h2>
+                    
+                    <form asp-action="Register" method="post">
+                        @Html.AntiForgeryToken()
+                        
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label fw-bold">LAST NAME</label>
+                            <input asp-for="LastName" class="form-control form-control-lg rounded-3" placeholder="Your last name" required>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="FirstName" class="form-label fw-bold">FIRST NAME</label>
+                            <input asp-for="FirstName" class="form-control form-control-lg rounded-3" placeholder="Your first name" required>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="ChildBirthday" class="form-label fw-bold">CHILD'S BIRTHDAY (MM/DD/YYYY)</label>
+                            <div class="input-group">
+                                <input asp-for="ChildBirthday" type="date" class="form-control form-control-lg rounded-3" placeholder="MM/DD/YYYY">
+                                <span class="input-group-text rounded-end">
+                                    <i class="bi bi-calendar"></i>
+                                </span>
+                            </div>
+                            <span asp-validation-for="ChildBirthday" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label fw-bold">PHONE NUMBER</label>
+                            <input asp-for="PhoneNumber" class="form-control form-control-lg rounded-3" placeholder="Your phone number" required>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label fw-bold">EMAIL</label>
+                            <input asp-for="Email" type="email" class="form-control form-control-lg rounded-3" placeholder="Your email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="Password" class="form-label fw-bold">PASSWORD</label>
+                            <div class="input-group">
+                                <input asp-for="Password" type="password" id="registerPassword" class="form-control form-control-lg" placeholder="Password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <button class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        id="toggleRegisterPassword"
+                                        style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                    <i class="bi bi-eye" id="registerPasswordIcon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label asp-for="ConfirmPassword" class="form-label fw-bold">CONFIRM PASSWORD</label>
+                            <div class="input-group">
+                                <input asp-for="ConfirmPassword" type="password" id="registerConfirmPassword" class="form-control form-control-lg" placeholder="Confirm password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                                <button class="btn btn-outline-secondary" 
+                                        type="button" 
+                                        id="toggleRegisterConfirmPassword"
+                                        style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                    <i class="bi bi-eye" id="registerConfirmPasswordIcon"></i>
+                                </button>
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark w-100 py-3 fw-bold text-uppercase rounded-3" style="font-size: 1.1rem;">
+                            REGISTER
+                        </button>
+                    </form>
+                    
+                    <div class="mt-4 text-center">
+                        <a asp-action="Index" asp-controller="Home" class="text-decoration-none d-inline-flex align-items-center" style="color: #3b82f6;">
+                            <i class="bi bi-arrow-left me-2"></i>
+                            <span>Back to Homepage</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Card custom border radius - Bootstrap không có rounded-4 */
+    .card {
+        border-radius: 12px;
+        border: none;
+    }
+    
+    /* Button hover effect - chỉ giữ animation */
+    .btn-dark:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Toggle password visibility trong register form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle Password
+            const togglePasswordBtn = document.getElementById('toggleRegisterPassword');
+            const passwordInput = document.getElementById('registerPassword');
+            const passwordIcon = document.getElementById('registerPasswordIcon');
+            
+            if (togglePasswordBtn && passwordInput && passwordIcon) {
+                togglePasswordBtn.addEventListener('click', function() {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        passwordIcon.classList.remove('bi-eye');
+                        passwordIcon.classList.add('bi-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        passwordIcon.classList.remove('bi-eye-slash');
+                        passwordIcon.classList.add('bi-eye');
+                    }
+                });
+            }
+            
+            // Toggle Confirm Password
+            const toggleConfirmPasswordBtn = document.getElementById('toggleRegisterConfirmPassword');
+            const confirmPasswordInput = document.getElementById('registerConfirmPassword');
+            const confirmPasswordIcon = document.getElementById('registerConfirmPasswordIcon');
+            
+            if (toggleConfirmPasswordBtn && confirmPasswordInput && confirmPasswordIcon) {
+                toggleConfirmPasswordBtn.addEventListener('click', function() {
+                    if (confirmPasswordInput.type === 'password') {
+                        confirmPasswordInput.type = 'text';
+                        confirmPasswordIcon.classList.remove('bi-eye');
+                        confirmPasswordIcon.classList.add('bi-eye-slash');
+                    } else {
+                        confirmPasswordInput.type = 'password';
+                        confirmPasswordIcon.classList.remove('bi-eye-slash');
+                        confirmPasswordIcon.classList.add('bi-eye');
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+
+
+
+
+
+

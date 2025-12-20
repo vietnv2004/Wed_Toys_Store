@@ -1,0 +1,119 @@
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-5 pb-5">
+                <h2 class="text-center mb-4 fw-bold text-uppercase">LOGIN ACCOUNT</h2>
+                <p class="text-center text-muted mb-4">Enter your email and password:</p>
+                
+                <form id="loginForm" asp-controller="Account" asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    
+                    @if (TempData["LoginError"] != null && TempData["LoginError"] is bool loginError && loginError)
+                    {
+                        <div class="alert alert-danger">
+                            Invalid email or password. Please try again.
+                        </div>
+                    }
+                    
+                    <div class="mb-3">
+                        <input type="email" name="Email" class="form-control form-control-lg rounded-3" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <input type="password" name="Password" id="loginPassword" class="form-control form-control-lg" placeholder="Password" required style="border-top-left-radius: 0.75rem; border-bottom-left-radius: 0.75rem; border-top-right-radius: 0; border-bottom-right-radius: 0;">
+                            <button class="btn btn-outline-secondary" 
+                                    type="button" 
+                                    id="toggleLoginPassword"
+                                    style="border-top-right-radius: 0.75rem; border-bottom-right-radius: 0.75rem; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                                <i class="bi bi-eye" id="loginPasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="RememberMe" id="rememberMe" value="true">
+                            <label class="form-check-label" for="rememberMe">
+                                Remember me
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold text-uppercase rounded-3" style="font-size: 1.1rem;">
+                        LOGIN
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center">
+                    <p class="mb-2">
+                        New customer? 
+                        <a asp-controller="Account" asp-action="Register" class="text-decoration-none fw-bold" style="color: #3b82f6;">
+                            Create account
+                        </a>
+                    </p>
+                    <p class="mb-0">
+                        Forgot password? 
+                        <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="text-decoration-none fw-bold" style="color: #3b82f6;">
+                            Recover password
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Modal custom styling - Bootstrap không có rounded-4 */
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Button hover effect - chỉ giữ animation */
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+    }
+</style>
+
+<script>
+    // Toggle password visibility trong login modal
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePasswordBtn = document.getElementById('toggleLoginPassword');
+        const passwordInput = document.getElementById('loginPassword');
+        const passwordIcon = document.getElementById('loginPasswordIcon');
+        
+        if (togglePasswordBtn && passwordInput && passwordIcon) {
+            togglePasswordBtn.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordIcon.classList.remove('bi-eye');
+                    passwordIcon.classList.add('bi-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordIcon.classList.remove('bi-eye-slash');
+                    passwordIcon.classList.add('bi-eye');
+                }
+            });
+        }
+    });
+</script>
+
+@if (TempData["ShowLoginModal"] != null && TempData["ShowLoginModal"] is bool showModal && showModal)
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loginModalElement = document.getElementById('loginModal');
+            if (loginModalElement) {
+                var loginModal = new bootstrap.Modal(loginModalElement);
+                loginModal.show();
+            }
+        });
+    </script>
+}

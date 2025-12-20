@@ -1,0 +1,301 @@
+@model Wed_Toys_Store.Models.BrandsViewModel
+
+@{
+    ViewData["Title"] = "Brands Management";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-main {
+            margin-left: 250px;
+        }
+
+        .brand-logo {
+            width: 100px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+    </style>
+</head>
+<body class="bg-body-secondary">
+    <!-- Sidebar -->
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main min-vh-100">
+        <!-- Content -->
+        <div class="p-4">
+            <!-- Messages -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Title and Add Button -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-tags me-2"></i>Brands Management
+                </h2>
+                <a href="@Url.Action("Create", "Brands")" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-2"></i>Create New Brand
+                </a>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="get" action="@Url.Action("Index", "Brands")" id="searchForm">
+                        <input type="hidden" name="page" value="1" id="pageInput">
+                        <input type="hidden" name="pageSize" value="@Model.PageSize" id="pageSizeInput">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label small text-muted">Filter</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">
+                                        <i class="bi bi-search text-muted"></i>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control border-start-0" 
+                                           name="searchKeyword" 
+                                           id="searchKeyword"
+                                           placeholder="Enter brand name..." 
+                                           value="@Model.SearchKeyword"
+                                           style="border-left: 0;">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label small text-muted">Status</label>
+                                <select class="form-select" name="status" id="statusFilter">
+                                    <option value="">All Statuses</option>
+                                    <option value="Active" selected="@(Model.Status == "Active")">Active</option>
+                                    <option value="Inactive" selected="@(Model.Status == "Inactive")">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="pageSizeSelect" class="form-label small text-muted">Items per page</label>
+                                <select class="form-select" id="pageSizeSelect" name="pageSize" onchange="changePageSize(this.value)">
+                                    <option value="10" selected="@(Model.PageSize == 10)">10</option>
+                                    <option value="20" selected="@(Model.PageSize == 20)">20</option>
+                                    <option value="50" selected="@(Model.PageSize == 50)">50</option>
+                                    <option value="100" selected="@(Model.PageSize == 100)">100</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label small text-muted d-block">&nbsp;</label>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="bi bi-search me-1"></i>Filter
+                                    </button>
+                                    <a href="@Url.Action("Index", "Brands", new { pageSize = Model.PageSize })" class="btn btn-outline-secondary">
+                                        <i class="bi bi-x-circle me-1"></i>Clear
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Brands Table -->
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-center">ID</th>
+                                <th class="text-center">Logo</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Display Order</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center w-auto">Actions</th>
+                            </tr>
+                        </thead>
+                    <tbody>
+                        @if (Model != null && Model.Brands != null && Model.Brands.Any())
+                        {
+                            @foreach (var brand in Model.Brands)
+                            {
+                                <tr>
+                                    <td class="text-center"><strong>@brand.Id</strong></td>
+                                    <td class="text-center">
+                                        @if (!string.IsNullOrEmpty(brand.LogoUrl))
+                                        {
+                                            <img src="@brand.LogoUrl" alt="@brand.Name" class="brand-logo">
+                                        }
+                                        else
+                                        {
+                                            <div class="brand-logo bg-light rounded d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="fw-semibold">@brand.Name</div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">@brand.DisplayOrder</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @if (brand.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-sm">
+                                            <a href="@Url.Action("Details", "Brands", new { id = brand.Id })" class="btn btn-outline-primary" title="View">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="@Url.Action("Edit", "Brands", new { id = brand.Id })" class="btn btn-outline-warning" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a href="@Url.Action("Delete", "Brands", new { id = brand.Id })" class="btn btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-5 text-muted">
+                                    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                    No brands found. <a href="@Url.Action("Create", "Brands")" class="text-primary">Create your first brand</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            @if (Model != null && Model.Brands != null && Model.Brands.Any() && Model.TotalPages > 1)
+            {
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center mb-0">
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link" 
+                               href="@(Model.HasPreviousPage ? Url.Action("Index", "Brands", new { page = Model.CurrentPage - 1, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status }) : "#")" 
+                               aria-label="Previous"
+                               @(Model.HasPreviousPage ? "" : "aria-disabled=\"true\" tabindex=\"-1\"")>
+                                <span aria-hidden="true">Previous</span>
+                            </a>
+                        </li>
+                        @{
+                            int startPage = Math.Max(1, Model.CurrentPage - 2);
+                            int endPage = Math.Min(Model.TotalPages, Model.CurrentPage + 2);
+                            
+                            if (startPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", "Brands", new { page = 1, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status })" aria-label="Go to page 1">1</a>
+                                </li>
+                                @if (startPage > 2)
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">...</span>
+                                    </li>
+                                }
+                            }
+                            
+                            for (int i = startPage; i <= endPage; i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                    @if (i == Model.CurrentPage)
+                                    {
+                                        <a class="page-link" 
+                                           href="@Url.Action("Index", "Brands", new { page = i, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status })"
+                                           aria-label="Go to page @i"
+                                           aria-current="page">@i</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="page-link" 
+                                           href="@Url.Action("Index", "Brands", new { page = i, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status })"
+                                           aria-label="Go to page @i">@i</a>
+                                    }
+                                </li>
+                            }
+                            
+                            if (endPage < Model.TotalPages)
+                            {
+                                @if (endPage < Model.TotalPages - 1)
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link" aria-hidden="true">...</span>
+                                    </li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" href="@Url.Action("Index", "Brands", new { page = Model.TotalPages, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status })" aria-label="Go to page @Model.TotalPages">@Model.TotalPages</a>
+                                </li>
+                            }
+                        }
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link" 
+                               href="@(Model.HasNextPage ? Url.Action("Index", "Brands", new { page = Model.CurrentPage + 1, pageSize = Model.PageSize, searchKeyword = Model.SearchKeyword, status = Model.Status }) : "#")" 
+                               aria-label="Next"
+                               @(Model.HasNextPage ? "" : "aria-disabled=\"true\" tabindex=\"-1\"")>
+                                <span aria-hidden="true">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function changePageSize(pageSize) {
+            const form = document.getElementById('searchForm');
+            document.getElementById('pageSizeInput').value = pageSize;
+            document.getElementById('pageInput').value = 1;
+            form.submit();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+

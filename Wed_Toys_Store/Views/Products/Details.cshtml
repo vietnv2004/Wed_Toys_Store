@@ -1,0 +1,481 @@
+@model Wed_Toys_Store.Models.Product
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+
+@{
+    ViewData["Title"] = Model.Name;
+    var token = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index">Products</a></li>
+        @if (Model.Category != null)
+        {
+            <li class="breadcrumb-item"><a asp-controller="Products" asp-action="Index" asp-route-categoryId="@Model.CategoryId">@Model.Category.Name</a></li>
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+    </ol>
+</nav>
+
+<div class="container mb-5">
+    <div class="row">
+        <!-- Product Image Section -->
+        <div class="col-lg-6 mb-4">
+            <div class="position-relative">
+                @if (Model.IsNew)
+                {
+                    <span class="badge bg-warning position-absolute top-0 start-0 m-3 fs-6 px-3 py-2">NEW</span>
+                }
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid rounded-3 shadow-sm" style="width: 100%; height: auto; object-fit: cover;">
+                }
+                else
+                {
+                    <div class="bg-light rounded-3 shadow-sm d-flex align-items-center justify-content-center" style="height: 500px;">
+                        <i class="bi bi-image text-secondary" style="font-size: 5rem;"></i>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Product Info Section -->
+        <div class="col-lg-6">
+            <div class="ps-lg-4">
+                <!-- Product Name -->
+                <h1 class="fw-bold mb-2" style="color: var(--brand-blue);">
+                    @Model.Name
+                    @if (Model.Stock > 0)
+                    {
+                        <span class="badge bg-success ms-2">In Stock</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger ms-2">Out of Stock</span>
+                    }
+                </h1>
+
+                <!-- Basic meta: brand, category, code, rating -->
+                <div class="mb-3 text-muted small">
+                    @if (!string.IsNullOrEmpty(Model.Brand))
+                    {
+                        <span>
+                            Brand:
+                            <span class="fw-semibold">@Model.Brand</span>
+                        </span>
+                    }
+                    @if (Model.Category != null)
+                    {
+                        <span class="mx-2">|</span>
+                        <span>
+                            Category:
+                            <a asp-controller="Products"
+                               asp-action="Index"
+                               asp-route-categoryId="@Model.CategoryId"
+                               class="fw-semibold text-decoration-none">
+                                @Model.Category.Name
+                            </a>
+                        </span>
+                    }
+                    <span class="mx-2">|</span>
+                    <span>
+                        @* Placeholder rating: 0 reviews *@
+                        <span class="text-warning">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </span>
+                        <span class="text-muted">(0)</span>
+                    </span>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-2">
+                    <h2 class="text-danger fw-bold mb-2">@Model.Price.ToString("N0")₫</h2>
+                </div>
+
+                <!-- Stock quantity -->
+                <div class="mb-3 text-muted small">
+                    <span class="text-uppercase">Quantity in stock:</span>
+                    <span class="fw-semibold ms-1">@Model.Stock</span>
+                </div>
+
+                <!-- Product type / status text -->
+                <div class="mb-2">
+                    <span class="text-uppercase small text-muted">AVAILABILITY:</span>
+                    <span class="fw-semibold ms-1">In stock</span>
+                </div>
+                <div class="mb-4">
+                    <div class="border border-danger rounded px-3 py-2 text-danger small" style="display: inline-block; max-width: 100%;">
+                        In stock
+                    </div>
+                </div>
+
+                <!-- Add to Cart Section -->
+                <div class="border-top pt-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <label class="fw-semibold mb-0">Quantity:</label>
+                        <div class="input-group" style="width: 150px;">
+                            <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity()">-</button>
+                            <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="@Model.Stock">
+                            <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity()">+</button>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="d-flex gap-3">
+                            <button class="btn btn-warning btn-lg flex-fill fw-bold" onclick="buyNow(@Model.Id)" @(Model.Stock == 0 ? "disabled" : "")>
+                                <i class="bi bi-bag-check me-2"></i>Buy Now
+                            </button>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                var isFavorite = ViewBag.IsFavorite != null && (bool)ViewBag.IsFavorite;
+                                <button id="favoriteButton"
+                                        type="button"
+                                        class="btn @(isFavorite ? "btn-danger" : "btn-outline-danger") btn-lg d-flex align-items-center justify-content-center"
+                                        data-product-id="@Model.Id"
+                                        data-is-favorite="@(isFavorite.ToString().ToLower())"
+                                        onclick="toggleFavorite(@Model.Id)">
+                                    <i id="favoriteIcon" class="bi @(isFavorite ? "bi-heart-fill" : "bi-heart") me-1"></i>
+                                    <span id="favoriteText">
+                                        Favorite
+                                    </span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button"
+                                        class="btn btn-outline-danger btn-lg d-flex align-items-center justify-content-center"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#loginModal">
+                                    <i class="bi bi-heart me-1"></i>
+                                    <span>Favorite</span>
+                                </button>
+                            }
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" onclick="addToCart(@Model.Id)" @(Model.Stock == 0 ? "disabled" : "")>
+                            <i class="bi bi-cart-plus me-2"></i>Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mt-4 pt-4 border-top">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-truck text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Free Shipping</h6>
+                                    <p class="text-muted small mb-0">Free shipping for orders from 500,000₫</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-arrow-return-left text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Easy Returns</h6>
+                                    <p class="text-muted small mb-0">30-day return policy</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start gap-3">
+                                <i class="bi bi-shield-check text-primary fs-4"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-1">Secure Payment</h6>
+                                    <p class="text-muted small mb-0">100% secure payment</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Product Description - full width, aligned with Related Products *@
+@if (!string.IsNullOrEmpty(Model.Description))
+{
+    <div class="container mb-5">
+        <div class="mt-4 pt-4 border-top">
+            <h5 class="fw-bold mb-3 text-uppercase" style="color: var(--brand-blue);">Product Description</h5>
+            <div class="text-muted lh-lg">
+                @Html.Raw(Model.Description)
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Related Products Section -->
+@if (ViewBag.RelatedProducts != null && ((List<Wed_Toys_Store.Models.Product>)ViewBag.RelatedProducts).Any())
+{
+    <div class="bg-light py-5 mt-5">
+        <div class="container">
+            <h3 class="fw-bold mb-4" style="color: var(--brand-blue);">
+                <i class="bi bi-grid-3x3-gap me-2"></i>Related Products
+            </h3>
+            <div class="position-relative">
+                <!-- Nút điều hướng trái -->
+                <button type="button"
+                        class="btn btn-light border rounded-circle shadow-sm position-absolute top-50 start-0 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
+                        style="z-index: 2; width: 40px; height: 40px;"
+                        onclick="scrollRelatedProducts('left')">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+
+                <!-- Nút điều hướng phải -->
+                <button type="button"
+                        class="btn btn-light border rounded-circle shadow-sm position-absolute top-50 end-0 translate-middle-y d-none d-md-flex align-items-center justify-content-center"
+                        style="z-index: 2; width: 40px; height: 40px;"
+                        onclick="scrollRelatedProducts('right')">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+
+                <!-- Vùng scroll ngang -->
+                <div id="relatedProductsWrapper" class="related-products-scroll">
+                    <div id="relatedProductsContainer" class="d-flex flex-nowrap gap-4 py-2">
+                @foreach (var relatedProduct in (List<Wed_Toys_Store.Models.Product>)ViewBag.RelatedProducts)
+                {
+                            <div class="related-product-item">
+                        <div class="card h-100 position-relative border border-secondary border-opacity-25 shadow-sm">
+                            @if (relatedProduct.IsNew)
+                            {
+                                <span class="badge bg-warning position-absolute top-0 end-0 m-2">New</span>
+                            }
+                            <a asp-action="Details" asp-route-id="@relatedProduct.Id" class="text-decoration-none">
+                                @if (!string.IsNullOrEmpty(relatedProduct.ImageUrl))
+                                {
+                                    <img src="@relatedProduct.ImageUrl" class="card-img-top" alt="@relatedProduct.Name" style="height: 250px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+                                        <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
+                                    </div>
+                                }
+                            </a>
+                            <div class="card-body d-flex flex-column">
+                                <a asp-action="Details" asp-route-id="@relatedProduct.Id" class="text-decoration-none text-dark">
+                                    <h6 class="card-title fw-bold">@relatedProduct.Name</h6>
+                                </a>
+                                <p class="card-text text-muted small mb-2">
+                                    @(relatedProduct.Description != null && relatedProduct.Description.Length > 60 ? relatedProduct.Description.Substring(0, 60) + "..." : relatedProduct.Description ?? "")
+                                </p>
+                                <div class="mt-auto">
+                                    <p class="card-text mb-2">
+                                        <strong class="text-danger fs-5">@relatedProduct.Price.ToString("N0")₫</strong>
+                                    </p>
+                                    @if (relatedProduct.Stock > 0)
+                                    {
+                                        <span class="badge bg-success">In Stock</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">Out of Stock</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function increaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        const max = parseInt(quantityInput.getAttribute('max'));
+        const current = parseInt(quantityInput.value);
+        if (current < max) {
+            quantityInput.value = current + 1;
+        }
+    }
+
+    function decreaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        const current = parseInt(quantityInput.value);
+        if (current > 1) {
+            quantityInput.value = current - 1;
+        }
+    }
+
+    function addToCart(productId) {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        fetch('/Cart/AddToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `productId=${productId}&quantity=${quantity}&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update cart badge
+                const cartBadge = document.querySelector('.cart-badge-count');
+                if (cartBadge) {
+                    cartBadge.textContent = data.cartCount || 0;
+                    cartBadge.style.display = (data.cartCount > 0) ? 'flex' : 'none';
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while adding to cart.');
+        });
+    }
+
+    function buyNow(productId) {
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/Cart/BuyNow';
+        
+        const productIdInput = document.createElement('input');
+        productIdInput.type = 'hidden';
+        productIdInput.name = 'productId';
+        productIdInput.value = productId;
+        
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'hidden';
+        quantityInput.name = 'quantity';
+        quantityInput.value = quantity;
+        
+        const tokenInput = document.createElement('input');
+        tokenInput.type = 'hidden';
+        tokenInput.name = '__RequestVerificationToken';
+        tokenInput.value = token;
+        
+        form.appendChild(productIdInput);
+        form.appendChild(quantityInput);
+        form.appendChild(tokenInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function toggleFavorite(productId) {
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '';
+        const favoriteButton = document.getElementById('favoriteButton');
+        const favoriteIcon = document.getElementById('favoriteIcon');
+        const favoriteText = document.getElementById('favoriteText');
+        
+        // Disable button during request
+        favoriteButton.disabled = true;
+        
+        fetch('/FavoriteProducts/ToggleFavorite', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `productId=${productId}&__RequestVerificationToken=${encodeURIComponent(token)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update button appearance
+                if (data.isFavorite) {
+                    favoriteIcon.className = 'bi bi-heart-fill me-1';
+                    favoriteText.textContent = 'Favorite';
+                    favoriteButton.classList.remove('btn-outline-danger');
+                    favoriteButton.classList.add('btn-danger');
+                } else {
+                    favoriteIcon.className = 'bi bi-heart me-1';
+                    favoriteText.textContent = 'Favorite';
+                    favoriteButton.classList.remove('btn-danger');
+                    favoriteButton.classList.add('btn-outline-danger');
+                }
+                
+                // Show success message
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                alertDiv.style.zIndex = '9999';
+                alertDiv.innerHTML = `
+                    <i class="bi bi-check-circle me-2"></i>${data.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.body.appendChild(alertDiv);
+                
+                // Auto remove alert after 3 seconds
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while updating favorites.');
+        })
+        .finally(() => {
+            favoriteButton.disabled = false;
+        });
+    }
+
+    function scrollRelatedProducts(direction) {
+        const wrapper = document.getElementById('relatedProductsWrapper');
+        if (!wrapper) return;
+
+        const scrollAmount = wrapper.clientWidth * 0.8; // cuộn ~80% chiều rộng
+        const options = {
+            left: direction === 'left' ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+        };
+
+        wrapper.scrollBy(options);
+    }
+
+</script>
+
+<style>
+    .related-products-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 0.5rem;
+    }
+
+    .related-products-scroll::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .related-products-scroll::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .related-products-scroll::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.15);
+        border-radius: 3px;
+    }
+
+    .related-product-item {
+        min-width: 250px;
+        max-width: 250px;
+    }
+
+    @@media (min-width: 768px) {
+        .related-product-item {
+            min-width: 260px;
+            max-width: 260px;
+        }
+    }
+</style>
+
+<input type="hidden" name="__RequestVerificationToken" value="@token" />
+

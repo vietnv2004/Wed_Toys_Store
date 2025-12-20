@@ -1,0 +1,151 @@
+@model Wed_Toys_Store.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+        /* Admin Sidebar Custom Styles */
+        :root {
+            --admin-sidebar-width: 250px;
+            --admin-bg-color: #4169E1;
+            --admin-bg-hover: #3556C7;
+            --admin-bg-active: #2E4FC0;
+        }
+
+        body {
+            background-color: #f8f9fa; /* Bootstrap Gray-100 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Sidebar Structure */
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--admin-sidebar-width);
+            background-color: var(--admin-bg-color);
+            color: white;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        /* Main Wrapper */
+        .admin-main {
+            margin-left: var(--admin-sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <div class="admin-main">
+        <div class="admin-content container-fluid">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h3 mb-0 text-danger">
+                    <i class="bi bi-trash3-fill me-2"></i>Delete Category
+                </h2>
+                <a href="@Url.Action("Index", "Categories")" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Confirm Deletion
+                    </h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="alert alert-warning border-start border-warning border-4" role="alert">
+                        <h6 class="alert-heading fw-bold"><i class="bi bi-exclamation-circle me-1"></i> Are you sure you want to delete this category?</h6>
+                        <p class="mb-0">This action cannot be undone.</p>
+
+                        @if (Model.Products != null && Model.Products.Any())
+                        {
+                            <hr>
+                            <div class="text-danger fw-bold">
+                                <i class="bi bi-radioactive me-1"></i> Critical Warning:
+                            </div>
+                            <p class="mb-0">
+                                This category currently contains <strong>@Model.Products.Count product(s)</strong>.
+                                Deleting this category may cause display errors for those products or result in data loss.
+                            </p>
+                        }
+                    </div>
+
+                    <div class="mt-4">
+                        <h6 class="text-muted text-uppercase small fw-bold mb-3 border-bottom pb-2">Category Details</h6>
+
+                        <dl class="row">
+                            <dt class="col-sm-3 text-muted">Category ID</dt>
+                            <dd class="col-sm-9 fw-bold">@Model.Id</dd>
+
+                            <dt class="col-sm-3 text-muted">Category Name</dt>
+                            <dd class="col-sm-9 fs-5 text-dark">@Model.Name</dd>
+
+                            <dt class="col-sm-3 text-muted">Description</dt>
+                            <dd class="col-sm-9">
+                                @if (string.IsNullOrEmpty(Model.Description))
+                                {
+                                    <span class="text-muted fst-italic">No description available</span>
+                                }
+                                else
+                                {
+                                    @Model.Description
+                                }
+                            </dd>
+
+                            <dt class="col-sm-3 text-muted">Product Count</dt>
+                            <dd class="col-sm-9">
+                                <span class="badge @(Model.Products?.Count > 0 ? "bg-warning text-dark" : "bg-secondary")">
+                                    @(Model.Products?.Count ?? 0) product(s)
+                                </span>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <form asp-action="Delete" method="post" class="mt-5 pt-3 border-top">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="@Url.Action("Index", "Categories")" class="btn btn-light btn-lg px-4">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-danger btn-lg px-4">
+                                <i class="bi bi-trash me-2"></i>Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

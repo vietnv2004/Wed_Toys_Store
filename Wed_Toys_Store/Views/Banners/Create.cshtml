@@ -1,0 +1,201 @@
+﻿@model Wed_Toys_Store.Models.Banner
+
+@{
+    ViewData["Title"] = "Create Banner";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+    <!-- CSS BẮT BUỘC (Bootstrap không thay thế được) -->
+    <style>
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-header: #2E4FC0;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .admin-sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: var(--admin-sidebar-bg);
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- MAIN -->
+    <div class="admin-main">
+        <div class="p-4">
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <!-- HEADER -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="mb-0 fw-bold">
+                            <i class="bi bi-plus-circle me-2"></i>Create New Banner
+                        </h2>
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Back to List
+                        </a>
+                    </div>
+
+                    <!-- FORM -->
+                    <form asp-action="Create" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger"></div>
+
+                        <div class="row">
+                            <div class="col-lg-8">
+
+                                <!-- TITLE -->
+                                <div class="mb-3">
+                                    <label asp-for="Title"
+                                           class="form-label fw-semibold">
+                                        Title <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="Title"
+                                           class="form-control form-control-lg"
+                                           placeholder="Enter banner title" />
+                                    <span asp-validation-for="Title"
+                                          class="text-danger small"></span>
+                                </div>
+
+                                <!-- DESCRIPTION -->
+                                <div class="mb-3">
+                                    <label asp-for="Description"
+                                           class="form-label fw-semibold">
+                                        Description
+                                    </label>
+                                    <textarea asp-for="Description"
+                                              class="form-control"
+                                              rows="3"
+                                              placeholder="Enter banner description"></textarea>
+                                    <span asp-validation-for="Description"
+                                          class="text-danger small"></span>
+                                </div>
+
+                                <!-- IMAGE URL -->
+                                <div class="mb-3">
+                                    <label asp-for="ImageUrl"
+                                           class="form-label fw-semibold">
+                                        Image URL <span class="text-danger">*</span>
+                                    </label>
+                                    <input asp-for="ImageUrl"
+                                           class="form-control form-control-lg"
+                                           placeholder="https://example.com/banner.jpg" />
+                                    <div class="form-text">
+                                        Enter the full URL of the banner image
+                                    </div>
+                                    <span asp-validation-for="ImageUrl"
+                                          class="text-danger small"></span>
+                                </div>
+
+                                <!-- LINK URL -->
+                                <div class="mb-3">
+                                    <label asp-for="LinkUrl"
+                                           class="form-label fw-semibold">
+                                        Link URL
+                                    </label>
+                                    <input asp-for="LinkUrl"
+                                           class="form-control form-control-lg"
+                                           placeholder="https://example.com or #" />
+                                    <div class="form-text">
+                                        URL to redirect when banner is clicked (optional)
+                                    </div>
+                                    <span asp-validation-for="LinkUrl"
+                                          class="text-danger small"></span>
+                                </div>
+
+                                <!-- ORDER + STATUS -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label asp-for="DisplayOrder"
+                                               class="form-label fw-semibold">
+                                            Display Order
+                                        </label>
+                                        <input asp-for="DisplayOrder"
+                                               type="number"
+                                               min="0"
+                                               value="0"
+                                               class="form-control form-control-lg" />
+                                        <div class="form-text">
+                                            Lower number displays first
+                                        </div>
+                                        <span asp-validation-for="DisplayOrder"
+                                              class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-semibold">
+                                            Status
+                                        </label>
+                                        <div class="form-check form-switch mt-2">
+                                            <input asp-for="IsActive"
+                                                   class="form-check-input"
+                                                   type="checkbox"
+                                                   role="switch"
+                                                   checked />
+                                            <label asp-for="IsActive"
+                                                   class="form-check-label ms-2">
+                                                Active
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ACTIONS -->
+                                <div class="d-flex gap-3 mt-4">
+                                    <button type="submit"
+                                            class="btn btn-primary btn-lg">
+                                        <i class="bi bi-check-circle me-2"></i>Create Banner
+                                    </button>
+                                    <a asp-action="Index"
+                                       class="btn btn-outline-secondary btn-lg">
+                                        <i class="bi bi-x-circle me-2"></i>Cancel
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+</body>
+</html>

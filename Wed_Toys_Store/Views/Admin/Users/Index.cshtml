@@ -1,0 +1,488 @@
+@model Wed_Toys_Store.Models.UsersViewModel
+@using System.Linq
+
+@{
+    ViewData["Title"] = "Users Management";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <style>
+        :root {
+            --admin-sidebar-bg: #4169E1;
+            --admin-sidebar-hover: #3556C7;
+            --admin-sidebar-active: #2E4FC0;
+            --admin-sidebar-header: #2E4FC0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: var(--admin-sidebar-bg);
+            color: white;
+            padding: 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .admin-sidebar .sidebar-header {
+            padding: 20px;
+            background-color: var(--admin-sidebar-header);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-sidebar .sidebar-header h4 {
+            margin: 0;
+            color: white;
+        }
+
+        .admin-sidebar .menu-section {
+            padding: 15px 0;
+        }
+
+        .admin-sidebar .menu-section-title {
+            padding: 10px 20px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .admin-sidebar .menu-item {
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+        }
+
+        .admin-sidebar .menu-item:hover {
+            background-color: var(--admin-sidebar-hover);
+            color: white;
+            border-left-color: var(--admin-sidebar-active);
+        }
+
+        .admin-sidebar .menu-item.active {
+            background-color: var(--admin-sidebar-active);
+            color: white;
+            border-left-color: white;
+        }
+
+        .admin-sidebar .menu-item i {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--admin-sidebar-header);
+        }
+
+        .admin-sidebar .sidebar-footer .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .admin-sidebar .sidebar-footer .btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        .admin-content {
+            padding: 2rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .badge-role {
+            font-size: 0.75rem;
+            padding: 0.35em 0.65em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <!-- Main Content -->
+    <div class="admin-main">
+        <!-- Content -->
+        <div class="admin-content">
+            <!-- Title -->
+            <div class="mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-people me-2"></i>Users Management
+                </h2>
+                <p class="text-muted">Manage all registered users</p>
+            </div>
+
+            <!-- Messages -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>@TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>@TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <!-- Search and Filters -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <form method="get" action="@Url.Action("Users", "Admin")" class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                <input type="text" class="form-control" name="searchTerm" placeholder="Search by name, email, or username..." value="@Model.SearchTerm">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" name="pageSize" onchange="this.form.submit()">
+                                <option value="10" selected="@(Model.PageSize == 10)">10 per page</option>
+                                <option value="20" selected="@(Model.PageSize == 20)">20 per page</option>
+                                <option value="50" selected="@(Model.PageSize == 50)">50 per page</option>
+                                <option value="100" selected="@(Model.PageSize == 100)">100 per page</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-search me-2"></i>Search
+                            </button>
+                        </div>
+                        <input type="hidden" name="page" value="1">
+                    </form>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list-ul me-2"></i>Users List
+                            <span class="badge bg-primary ms-2">@Model.TotalItems</span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    @if (Model.Users.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 60px;">Avatar</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
+                                        <th>Roles</th>
+                                        <th>Address</th>
+                                        <th>Created At</th>
+                                        <th style="width: 150px;" class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.Users)
+                                    {
+                                        var userWithRoles = (ViewBag.UsersWithRoles as List<object>)?.FirstOrDefault(x => 
+                                            ((dynamic)x).User.Id == user.Id);
+                                        var roles = userWithRoles != null ? ((dynamic)userWithRoles).Roles as IList<string> : new List<string>();
+                                        var displayName = !string.IsNullOrEmpty(user.FullName) ? user.FullName : 
+                                            (!string.IsNullOrEmpty(user.FirstName) || !string.IsNullOrEmpty(user.LastName) 
+                                                ? $"{user.FirstName} {user.LastName}".Trim() 
+                                                : user.UserName ?? "N/A");
+                                        var initials = !string.IsNullOrEmpty(displayName) && displayName != "N/A" 
+                                            ? string.Join("", displayName.Split(' ').Take(2).Select(n => n[0].ToString().ToUpper()))
+                                            : "U";
+                                        
+                                        <tr>
+                                            <td>
+                                                <div class="user-avatar">
+                                                    @initials
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="fw-bold">@displayName</div>
+                                                @if (!string.IsNullOrEmpty(user.PhoneNumber))
+                                                {
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-telephone me-1"></i>@user.PhoneNumber
+                                                    </small>
+                                                }
+                                            </td>
+                                            <td>
+                                                @user.Email
+                                                @if (user.EmailConfirmed)
+                                                {
+                                                    <span class="badge bg-success badge-role ms-1" title="Email Verified">
+                                                        <i class="bi bi-check-circle"></i>
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>@user.UserName</td>
+                                            <td>
+                                                @{
+                                                    var isLockedStatus = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow;
+                                                }
+                                                @if (roles != null && roles.Any())
+                                                {
+                                                    foreach (var role in roles)
+                                                    {
+                                                        <span class="badge bg-info badge-role me-1">@role</span>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary badge-role">User</span>
+                                                }
+                                                @if (isLockedStatus)
+                                                {
+                                                    <span class="badge bg-danger badge-role" title="Account Locked">
+                                                        <i class="bi bi-lock"></i> Locked
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (!string.IsNullOrEmpty(user.Address))
+                                                {
+                                                    <span class="text-truncate d-inline-block" style="max-width: 200px;" title="@user.Address">
+                                                        @user.Address
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">-</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <small>@user.CreatedAt.ToString("MM/dd/yyyy")</small>
+                                                <br>
+                                                <small class="text-muted">@user.CreatedAt.ToString("HH:mm")</small>
+                                            </td>
+                                            <td>
+                                                @{
+                                                    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                                                    var isCurrentUser = user.Id == currentUserId;
+                                                    var isLocked = user.LockoutEnd.HasValue && user.LockoutEnd.Value > DateTimeOffset.UtcNow;
+                                                    var currentRole = roles != null && roles.Any() ? roles.First() : "User";
+                                                }
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="@Url.Action("UserDetails", "Admin", new { id = user.Id })" 
+                                                       class="btn btn-outline-primary" title="View Details">
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                                    
+                                                    <!-- Role Change Dropdown -->
+                                                    @if (!isCurrentUser)
+                                                    {
+                                                        <div class="btn-group btn-group-sm">
+                                                            <button type="button" class="btn btn-outline-info dropdown-toggle" 
+                                                                    data-bs-toggle="dropdown" 
+                                                                    aria-expanded="false"
+                                                                    title="Change Role">
+                                                                <i class="bi bi-person-badge"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a class="dropdown-item @(currentRole == "User" ? "active" : "")" 
+                                                                       href="#" 
+                                                                       onclick="changeRole('@user.Id', 'User'); return false;">
+                                                                        <i class="bi bi-person me-2"></i>User
+                                                                        @if (currentRole == "User") { <i class="bi bi-check float-end"></i> }
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item @(currentRole == "Admin" ? "active" : "")" 
+                                                                       href="#" 
+                                                                       onclick="changeRole('@user.Id', 'Admin'); return false;">
+                                                                        <i class="bi bi-shield-check me-2"></i>Admin
+                                                                        @if (currentRole == "Admin") { <i class="bi bi-check float-end"></i> }
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    }
+                                                    
+                                                    <!-- Lock/Unlock Button -->
+                                                    @if (!isCurrentUser)
+                                                    {
+                                                        @if (isLocked)
+                                                        {
+                                                            <button type="button" class="btn btn-outline-warning" 
+                                                                    onclick="unlockUser('@user.Id', '@displayName')" 
+                                                                    title="Unlock Account">
+                                                                <i class="bi bi-unlock"></i>
+                                                            </button>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-outline-danger" 
+                                                                    onclick="lockUser('@user.Id', '@displayName')" 
+                                                                    title="Lock Account">
+                                                                <i class="bi bi-lock"></i>
+                                                            </button>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" class="btn btn-outline-secondary" disabled title="Cannot modify your own account">
+                                                            <i class="bi bi-lock"></i>
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        @if (Model.TotalPages > 1)
+                        {
+                            <div class="card-footer bg-white">
+                                <nav aria-label="Users pagination">
+                                    <ul class="pagination justify-content-center mb-0">
+                                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                                            <a class="page-link" 
+                                               href="@Url.Action("Users", "Admin", new { page = Model.CurrentPage - 1, pageSize = Model.PageSize, searchTerm = Model.SearchTerm })"
+                                               aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        
+                                        @for (int i = Math.Max(1, Model.CurrentPage - 2); i <= Math.Min(Model.TotalPages, Model.CurrentPage + 2); i++)
+                                        {
+                                            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                                                <a class="page-link" 
+                                                   href="@Url.Action("Users", "Admin", new { page = i, pageSize = Model.PageSize, searchTerm = Model.SearchTerm })"
+                                                   aria-label="Go to page @i"
+                                                   @if (i == Model.CurrentPage) { <text>aria-current="page"</text> }>@i</a>
+                                            </li>
+                                        }
+                                        
+                                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                                            <a class="page-link" 
+                                               href="@Url.Action("Users", "Admin", new { page = Model.CurrentPage + 1, pageSize = Model.PageSize, searchTerm = Model.SearchTerm })"
+                                               aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <div class="text-center mt-2">
+                                    <small class="text-muted">
+                                        Showing @((Model.CurrentPage - 1) * Model.PageSize + 1) to @(Math.Min(Model.CurrentPage * Model.PageSize, Model.TotalItems)) of @Model.TotalItems users
+                                    </small>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-people" style="font-size: 4rem; color: #ccc;"></i>
+                            <p class="text-muted mt-3">No users found</p>
+                            @if (!string.IsNullOrEmpty(Model.SearchTerm))
+                            {
+                                <a href="@Url.Action("Users", "Admin")" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-left me-2"></i>Clear Search
+                                </a>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lock/Unlock Forms -->
+    <form id="lockUserForm" method="post" action="@Url.Action("LockUser", "Admin")" style="display: none;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" id="lockUserId" />
+    </form>
+
+    <form id="unlockUserForm" method="post" action="@Url.Action("UnlockUser", "Admin")" style="display: none;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" id="unlockUserId" />
+    </form>
+
+    <form id="changeRoleForm" method="post" action="@Url.Action("ChangeUserRole", "Admin")" style="display: none;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" id="changeRoleUserId" />
+        <input type="hidden" name="role" id="changeRoleRole" />
+    </form>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function lockUser(userId, userName) {
+            if (confirm('Are you sure you want to lock account for user "' + userName + '"? The user will not be able to login.')) {
+                document.getElementById('lockUserId').value = userId;
+                document.getElementById('lockUserForm').submit();
+            }
+        }
+
+        function unlockUser(userId, userName) {
+            if (confirm('Are you sure you want to unlock account for user "' + userName + '"?')) {
+                document.getElementById('unlockUserId').value = userId;
+                document.getElementById('unlockUserForm').submit();
+            }
+        }
+
+        function changeRole(userId, role) {
+            var roleName = role === 'Admin' ? 'Administrator' : 'User';
+            if (confirm('Are you sure you want to change this user\'s role to "' + roleName + '"?')) {
+                document.getElementById('changeRoleUserId').value = userId;
+                document.getElementById('changeRoleRole').value = role;
+                document.getElementById('changeRoleForm').submit();
+            }
+        }
+    </script>
+</body>
+</html>
+
